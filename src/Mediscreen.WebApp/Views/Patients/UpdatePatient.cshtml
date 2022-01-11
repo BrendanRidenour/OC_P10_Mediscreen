@@ -1,0 +1,92 @@
+﻿@inject Microsoft.AspNetCore.Authentication.ISystemClock Clock
+@model PatientData
+@{
+    ViewBag.Title = "Update a Patient";
+}
+
+<section id="create-patient" class="container mb-5">
+    <h1>@ViewBag.Title</h1>
+    <h3>Review and update details about a patient</h3>
+    <form method="post">
+        <div class="row mt-5 mb-2">
+            <h5>Required Information</h5>
+            <div class="col">
+                <label asp-for="GivenName"></label><span class="required-field">&lowast;</span>
+                <input class="form-control" asp-for="GivenName" autofocus>
+                <span asp-validation-for="GivenName"></span>
+            </div>
+            <div class="col">
+                <label asp-for="FamilyName"></label><span class="required-field">&lowast;</span>
+                <input class="form-control" asp-for="FamilyName">
+                <span asp-validation-for="FamilyName"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="DateOfBirth"></label><span class="required-field">&lowast;</span>
+                <div>
+                    <select class="form-select" asp-for="DateOfBirth.Year" aria-label="Year of Birth">
+                        <option value="" disabled selected>year</option>
+                        @{
+                            var currentYear = Clock.UtcNow.Year;
+                            var firstYear = currentYear - 125;
+                        }
+                        @for (var year = currentYear; year >= firstYear; year--)
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    </select>
+                    <span asp-validation-for="DateOfBirth.Year"></span>
+                </div>
+                <div>
+                    <select class="form-select" asp-for="DateOfBirth.Month" aria-label="Month of Birth">
+                        <option value="" disabled selected>month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <span asp-validation-for="DateOfBirth.Month"></span>
+                </div>
+                <div>
+                    <input class="form-control" asp-for="DateOfBirth.Day" placeholder="day">
+                    <span asp-validation-for="DateOfBirth.Day"></span>
+                </div>
+            </div>
+            <div class="col">
+                <label asp-for="BiologicalSex"></label><span class="required-field">&lowast;</span>
+                <select class="form-select" asp-for="BiologicalSex" aria-label="Biological Sex">
+                    <option selected></option>
+                    <option value="@((int)BiologicalSex.Female)">@BiologicalSex.Female</option>
+                    <option value="@((int)BiologicalSex.Male)">@BiologicalSex.Male</option>
+                    <option value="@((int)BiologicalSex.Intersex)">@BiologicalSex.Intersex</option>
+                </select>
+                <span asp-validation-for="BiologicalSex"></span>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <h5>Optional Information</h5>
+            <div class="col">
+                <label asp-for="HomeAddress"></label>
+                <input class="form-control" asp-for="HomeAddress" placeholder="123 Fake St, City, State 54321">
+                <span asp-validation-for="HomeAddress"></span>
+            </div>
+            <div class="col">
+                <label asp-for="PhoneNumber"></label>
+                <input class="form-control" asp-for="PhoneNumber" placeholder="(000) 000-0000">
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+        </div>
+        <div class="row mt-4 d-grid">
+            <button type="submit" class="btn btn-primary">Update Patient</button>
+        </div>
+    </form>
+</section>

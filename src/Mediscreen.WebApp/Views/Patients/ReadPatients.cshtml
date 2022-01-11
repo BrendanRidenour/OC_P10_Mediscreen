@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PatientEntity>
+@{
+    ViewBag.Title = "View Patients";
+}
+
+<section id="patients">
+    <h1>@ViewBag.Title</h1>
+    <h3>Here is a list of all registered patients.</h3>
+    <table class="table bt mt-5">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Date of Birth</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model ?? Array.Empty<PatientEntity>())
+            {
+                <tr>
+                    <td>@patient.GetFullName()</td>
+                    <td>@patient.DateOfBirth</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="@patient.GetFullName() actions">
+                            <a class="btn btn-secondary" asp-controller="Patients" asp-action="ReadPatient" asp-route-id="@patient.Id">Details</a>
+                            <a class="btn btn-secondary" asp-controller="Patients" asp-action="UpdatePatient" asp-route-id="@patient.Id">Update</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <a class="btn btn-primary" asp-controller="Patients" asp-action="CreatePatient">Add New Patient</a>
+    </div>
+</section>
+
+@section Styles {
+<link rel="stylesheet" href="~/lib/basictable/basictable.min.css" />
+}
+
+@section Scripts {
+<script src="~/lib/basictable/jquery.basictable.min.js"></script>
+}
