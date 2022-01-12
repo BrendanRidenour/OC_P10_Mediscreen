@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mediscreen.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Mediscreen.Controllers
 {
@@ -38,6 +39,9 @@ namespace Mediscreen.Controllers
         public async Task<IActionResult> ReadPatient([FromRoute] Guid id)
         {
             var patient = await _patientService.Read(id);
+
+            if (patient is null)
+                return NotFound();
 
             return View(patient);
         }

@@ -6,42 +6,46 @@
 <section id="create-patient" class="container mb-5">
     <h1>@ViewBag.Title</h1>
     <h3>Review and update details about a patient</h3>
-    <form method="post">
-        <div class="row mt-5 mb-2">
-            <div class="col">
-                <label asp-for="GivenName"></label>
-                <input asp-for="GivenName" class="form-control" readonly />
-            </div>
-            <div class="col">
-                <label asp-for="FamilyName"></label><span class="required-field">&lowast;</span>
-                <input asp-for="FamilyName" class="form-control" readonly />
-            </div>
+    <div class="row mt-5 mb-2">
+        <div class="col">
+            <label asp-for="GivenName"></label>
+            <input asp-for="GivenName" class="form-control" readonly />
         </div>
-        <div class="row">
-            <div class="col">
-                <label asp-for="DateOfBirth"></label><span class="required-field">&lowast;</span>
-                <input asp-for="DateOfBirth" class="form-control" readonly />
-            </div>
-            <div class="col">
-                <label asp-for="BiologicalSex"></label><span class="required-field">&lowast;</span>
-                <input asp-for="BiologicalSex" class="form-control" readonly />
-            </div>
+        <div class="col">
+            <label asp-for="FamilyName"></label><span class="required-field">&lowast;</span>
+            <input asp-for="FamilyName" class="form-control" readonly />
         </div>
-        <div class="row">
-            @if (Model!.HomeAddress is not null)
-            {
-                <div class="col">
-                    <label asp-for="HomeAddress"></label>
-                    <input asp-for="HomeAddress" class="form-control" readonly />
-                </div>
-            }
-            @if (Model.PhoneNumber is not null)
-            {
-                <div class="col">
-                    <label asp-for="PhoneNumber"></label>
-                    <input asp-for="PhoneNumber" class="form-control" readonly />
-                </div>
-            }
+    </div>
+    <div class="row">
+        <div class="col">
+            <label asp-for="DateOfBirth"></label><span class="required-field">&lowast;</span>
+            <input asp-for="DateOfBirth" class="form-control" readonly />
         </div>
-    </form>
+        <div class="col">
+            <label asp-for="BiologicalSex"></label><span class="required-field">&lowast;</span>
+            <input asp-for="BiologicalSex" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="row">
+        @if (Model!.HomeAddress is not null)
+        {
+            <div class="col">
+                <label asp-for="HomeAddress"></label>
+                <input asp-for="HomeAddress" class="form-control" readonly />
+            </div>
+        }
+        @if (Model.PhoneNumber is not null)
+        {
+            <div class="col">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" readonly />
+            </div>
+        }
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <a class="btn btn-primary" asp-controller="Patients" asp-action="ReadPatients">Back to All Patients</a>
+            <a class="btn btn-primary" asp-controller="Patients" asp-action="UpdatePatient" asp-route-id="@Model.Id">Update Patient</a>
+        </div>
+    </div>
 </section>

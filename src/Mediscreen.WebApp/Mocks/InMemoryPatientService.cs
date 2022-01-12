@@ -1,4 +1,6 @@
-﻿namespace Mediscreen.Mocks
+﻿using Mediscreen.Data;
+
+namespace Mediscreen.Mocks
 {
     public class InMemoryPatientService : IPatientService
     {
@@ -10,7 +12,7 @@
                 GivenName = "John",
                 FamilyName = "Smith",
                 BiologicalSex = BiologicalSex.Male,
-                DateOfBirth = new Birthdate(1960, 1, 1),
+                DateOfBirth = new Date(1960, 1, 1),
                 PhoneNumber = "(123) 456-7890",
             },
             new PatientEntity()
@@ -19,7 +21,7 @@
                 GivenName = "Jane",
                 FamilyName = "Doe",
                 BiologicalSex = BiologicalSex.Female,
-                DateOfBirth = new Birthdate(1970, 12, 12),
+                DateOfBirth = new Date(1970, 12, 12),
                 HomeAddress = "123 Fake Street, Citi, ST 54321",
             },
         };

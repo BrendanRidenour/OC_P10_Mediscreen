@@ -1,4 +1,4 @@
-﻿namespace Mediscreen
+﻿namespace Mediscreen.Data
 {
     public interface IPatientService
     {
@@ -6,6 +6,5 @@
         public Task<IEnumerable<PatientEntity>> Read();
         public Task<PatientEntity?> Read(Guid id);
         Task Update(PatientEntity entity);
-        public Task Delete(Guid id);
     }
 }

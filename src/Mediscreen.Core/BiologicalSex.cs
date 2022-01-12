@@ -2,8 +2,7 @@
 {
     public enum BiologicalSex
     {
-        Female = 2,
+        Female = 0,
         Male = 1,
-        Intersex = 0,
     }
 }

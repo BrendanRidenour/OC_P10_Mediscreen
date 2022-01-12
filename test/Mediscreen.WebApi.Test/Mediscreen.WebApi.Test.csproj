@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Mediscreen.Core\Mediscreen.Core.csproj" />
+	  <ProjectReference Include="..\..\src\Mediscreen.WebApi\Mediscreen.WebApi.csproj" />
 	  <ProjectReference Include="..\ThoughtHaven.TestHelpers\ThoughtHaven.TestHelpers.csproj" />
 	</ItemGroup>
 

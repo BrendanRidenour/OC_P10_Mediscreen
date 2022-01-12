@@ -1,6 +1,4 @@
-﻿using Mediscreen.WebApp.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Mediscreen.Controllers
 {
@@ -9,20 +7,12 @@ namespace Mediscreen.Controllers
     {
         [HttpGet(nameof(ServerError))]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult ServerError()
+        public IActionResult ServerError([FromQuery] int? statusCode)
         {
-            return View(viewName: nameof(ServerError),
-                model: new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpGet(nameof(StatusCodeError))]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult StatusCodeError([FromQuery] int code)
-        {
-            if (code == 404)
+            if (statusCode == 404)
                 return View("NotFound");
 
-            return ServerError();
+            return View();
         }
     }
 }

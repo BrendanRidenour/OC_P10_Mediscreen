@@ -60,6 +60,9 @@
                     <input class="form-control" asp-for="DateOfBirth.Day" placeholder="day">
                     <span asp-validation-for="DateOfBirth.Day"></span>
                 </div>
+                <div>
+                    <span asp-validation-for="DateOfBirth"></span>
+                </div>
             </div>
             <div class="col">
                 <label asp-for="BiologicalSex"></label><span class="required-field">&lowast;</span>
@@ -67,7 +70,6 @@
                     <option selected></option>
                     <option value="@((int)BiologicalSex.Female)">@BiologicalSex.Female</option>
                     <option value="@((int)BiologicalSex.Male)">@BiologicalSex.Male</option>
-                    <option value="@((int)BiologicalSex.Intersex)">@BiologicalSex.Intersex</option>
                 </select>
                 <span asp-validation-for="BiologicalSex"></span>
             </div>

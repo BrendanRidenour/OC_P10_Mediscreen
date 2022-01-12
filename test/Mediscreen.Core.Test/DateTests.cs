@@ -3,14 +3,14 @@ using Xunit;
 
 namespace Mediscreen
 {
-    public class BirthdateTests
+    public class DateTests
     {
         [Fact]
         public void Constructor_MalformedValue_Throws()
         {
             var exception = Assert.Throws<ArgumentException>("value", () =>
             {
-                new Birthdate(value: "bad_value");
+                new Date(value: "bad_value");
             });
 
             Assert.Equal("Value could not be parsed. (Parameter 'value')", exception.Message);
@@ -23,7 +23,7 @@ namespace Mediscreen
         {
             var value = $"{year}-{month:00}-{day:00}";
 
-            var birthdate = new Birthdate(value);
+            var birthdate = new Date(value);
 
             Assert.Equal(year, birthdate.Year);
             Assert.Equal(month, birthdate.Month);
@@ -35,7 +35,7 @@ namespace Mediscreen
         [InlineData(2021, 3, 4)]
         public void ToString_WhenCalled_SetsProperties(int year, int month, int day)
         {
-            var birthdate = new Birthdate(year, month, day);
+            var birthdate = new Date(year, month, day);
 
             var result = birthdate.ToString();
 

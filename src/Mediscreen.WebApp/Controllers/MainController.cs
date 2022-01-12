@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Mediscreen.WebApp.Controllers
+namespace Mediscreen.Controllers
 {
     public class MainController : Controller
     {
         [HttpGet("/")]
-        public IActionResult Home()
-        {
-            return View();
-        }
+        public IActionResult Home() => View();
     }
 }

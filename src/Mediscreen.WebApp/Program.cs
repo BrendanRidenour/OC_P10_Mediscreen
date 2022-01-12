@@ -1,4 +1,4 @@
-using Mediscreen;
+using Mediscreen.Data;
 using Mediscreen.Mocks;
 using Microsoft.AspNetCore.Authentication;
 
@@ -21,7 +21,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseStatusCodePagesWithReExecute("/Errors/StatusCodeError", queryFormat: "?code={0}");
+app.UseStatusCodePagesWithReExecute("/Errors/ServerError", queryFormat: "?statuscode={0}");
 
 app.UseRouting();
 

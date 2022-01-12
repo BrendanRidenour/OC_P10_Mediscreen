@@ -1,17 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Mediscreen
+﻿namespace Mediscreen
 {
-    public class Birthdate
+    public class Date
     {
         public virtual int Year { get; set; }
 
-        [Range(minimum: 1, maximum: 12)]
         public virtual int Month { get; set; }
 
         public virtual int Day { get; set; }
 
-        public Birthdate(string value)
+        public Date(string value)
             : this()
         {
             try
@@ -36,15 +33,17 @@ namespace Mediscreen
             }
         }
 
-        public Birthdate(int year, int month, int day)
+        public Date(int year, int month, int day)
             : this()
         {
+            _ = new DateTime(year, month, day);
+
             this.Year = year;
             this.Month = month;
             this.Day = day;
         }
 
-        public Birthdate() { }
+        public Date() { }
 
         public override string ToString() => $"{Year:0000}-{Month:00}-{Day:00}";
     }
