@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Authentication;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<ISystemClock, SystemClock>();
-builder.Services.AddHttpClient<IPatientService, WebApiPatientService>(client =>
+builder.Services.AddHttpClient<IPatientService, DemographicsPatientService>(client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["WebApi:PatientService:BaseAddress"]);
+    client.BaseAddress = new Uri(
+        builder.Configuration["ExternalServices:DemographicsWebApi:BaseAddress"]);
 });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);

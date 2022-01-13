@@ -4,19 +4,19 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:18843",
-      "sslPort": 44327
+      "applicationUrl": "http://localhost:5547",
+      "sslPort": 44306
     }
   },
   "profiles": {
-    "Mediscreen.WebApi": {
+    "Mediscreen.Demographics.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7082;http://localhost:5082",
+      "applicationUrl": "https://localhost:7021;http://localhost:5021",
       "dotnetRunMessages": true
     },
     "IIS Express": {

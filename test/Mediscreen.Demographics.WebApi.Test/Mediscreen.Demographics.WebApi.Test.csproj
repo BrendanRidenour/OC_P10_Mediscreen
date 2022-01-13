@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
-		<RootNamespace>Mediscreen.Data</RootNamespace>
+		<RootNamespace>Mediscreen</RootNamespace>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -21,7 +21,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Mediscreen.WebApi.Client\Mediscreen.WebApi.Client.csproj" />
+	  <ProjectReference Include="..\..\src\Mediscreen.Demographics.WebApi\Mediscreen.Demographics.WebApi.csproj" />
+	  <ProjectReference Include="..\ThoughtHaven.TestHelpers\ThoughtHaven.TestHelpers.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -2,11 +2,11 @@
 
 namespace Mediscreen.Data
 {
-    public class WebApiPatientService : IPatientService
+    public class DemographicsPatientService : IPatientService
     {
         readonly HttpClient _http;
 
-        public WebApiPatientService(HttpClient http)
+        public DemographicsPatientService(HttpClient http)
         {
             _http = http ?? throw new ArgumentNullException(nameof(http));
         }

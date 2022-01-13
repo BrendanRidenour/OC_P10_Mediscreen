@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Mediscreen.Data
 {
-    public class WebApiPatientServiceTests
+    public class DemographicsPatientServiceTests
     {
         [Theory]
         [InlineData("GN1")]
@@ -202,7 +202,7 @@ namespace Mediscreen.Data
             return response;
         }
         static MockHttpClient HttpClient() => new(new MockHttpMessageHandler());
-        static WebApiPatientService PatientService(MockHttpClient http) => new(http);
+        static DemographicsPatientService PatientService(MockHttpClient http) => new(http);
         static PatientData PatientData(string givenName = "GN") => new()
         {
             GivenName = givenName,

@@ -16,7 +16,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Mediscreen.Core\Mediscreen.Core.csproj" />
-	  <ProjectReference Include="..\Mediscreen.WebApi.Client\Mediscreen.WebApi.Client.csproj" />
+	  <ProjectReference Include="..\Mediscreen.Demographics.WebApi.Client\Mediscreen.Demographics.WebApi.Client.csproj" />
 	</ItemGroup>
 
 </Project>
