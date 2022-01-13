@@ -1,11 +1,13 @@
 using Mediscreen.Data;
-using Mediscreen.Mocks;
 using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<ISystemClock, SystemClock>();
-builder.Services.AddTransient<IPatientService, InMemoryPatientService>();
+builder.Services.AddHttpClient<IPatientService, WebApiPatientService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["WebApi:PatientService:BaseAddress"]);
+});
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
