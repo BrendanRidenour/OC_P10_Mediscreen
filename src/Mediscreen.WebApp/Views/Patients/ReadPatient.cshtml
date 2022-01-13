@@ -3,7 +3,7 @@
     ViewBag.Title = "Patient Details";
 }
 
-<section id="create-patient" class="container mb-5">
+<section id="read-patient" class="container mb-5">
     <h1>@ViewBag.Title</h1>
     <h3>Review and update details about a patient</h3>
     <div class="row mt-5 mb-2">
@@ -12,17 +12,17 @@
             <input asp-for="GivenName" class="form-control" readonly />
         </div>
         <div class="col">
-            <label asp-for="FamilyName"></label><span class="required-field">&lowast;</span>
+            <label asp-for="FamilyName"></label>
             <input asp-for="FamilyName" class="form-control" readonly />
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <label asp-for="DateOfBirth"></label><span class="required-field">&lowast;</span>
+            <label asp-for="DateOfBirth"></label>
             <input asp-for="DateOfBirth" class="form-control" readonly />
         </div>
         <div class="col">
-            <label asp-for="BiologicalSex"></label><span class="required-field">&lowast;</span>
+            <label asp-for="BiologicalSex"></label>
             <input asp-for="BiologicalSex" class="form-control" readonly />
         </div>
     </div>
