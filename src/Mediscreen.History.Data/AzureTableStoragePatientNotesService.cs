@@ -1,0 +1,96 @@
+﻿using Azure.Data.Tables;
+
+namespace Mediscreen.Data
+{
+    public class AzureTableStoragePatientNotesService : IPatientNotesService
+    {
+        readonly string _connectionString;
+
+        public AzureTableStoragePatientNotesService(string connectionString)
+        {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException($"'{nameof(connectionString)}' cannot be null or whitespace.", nameof(connectionString));
+            }
+
+            _connectionString = connectionString;
+        }
+
+        bool tableExists = false;
+        protected virtual async Task<TableClient> CreateTableClient()
+        {
+            var client = new TableClient(_connectionString, tableName: "PatientNotes");
+
+            if (!tableExists)
+            {
+                await client.CreateIfNotExistsAsync();
+                tableExists = true;
+            }
+
+            return client;
+        }
+
+        public async Task<PatientNoteEntity> Create(PatientNoteData note)
+        {
+            var entity = new PatientNoteTableEntity(noteId: Guid.NewGuid(), note);
+
+            var tables = await CreateTableClient();
+
+            await tables.AddEntityAsync(entity);
+
+            return entity;
+        }
+
+        public async Task<IEnumerable<PatientNoteEntity>> Read(Guid patientId)
+        {
+            var partitionKey = PatientNoteTableEntity.CreatePartitionKey(patientId);
+
+            var tables = await CreateTableClient();
+
+            var results = tables.QueryAsync<PatientNoteTableEntity>(
+                filter: $"PartitionKey eq '{partitionKey}'");
+
+            var notes = new List<PatientNoteEntity>();
+
+            await foreach (var page in results.AsPages())
+                foreach (var entity in page.Values)
+                    if (entity is not null)
+                        notes.Add(entity);
+
+            return notes;
+        }
+
+        public async Task<PatientNoteEntity?> Read(Guid patientId, Guid noteId) =>
+            await ReadEntity(patientId, noteId);
+
+        protected async Task<PatientNoteTableEntity> ReadEntity(Guid patientId, Guid noteId)
+        {
+            var partitionKey = PatientNoteTableEntity.CreatePartitionKey(patientId);
+            var rowKey = PatientNoteTableEntity.CreateRowKey(noteId);
+
+            var tables = await CreateTableClient();
+
+            var entity = await tables.GetEntityAsync<PatientNoteTableEntity>(partitionKey, rowKey);
+
+            return entity;
+        }
+
+        public async Task Update(PatientNoteEntity note)
+        {
+            var existingNote = await ReadEntity(note.PatientId, note.Id);
+
+            if (existingNote is null)
+                throw new InvalidOperationException($"Cannot update note because none exist with the note id '{note.Id}' and patient id '{note.PatientId}'.");
+
+            var updateEntity = new PatientNoteTableEntity(note)
+            {
+                Timestamp = existingNote.Timestamp,
+                ETag = existingNote.ETag,
+            };
+
+            var tables = await CreateTableClient();
+
+            await tables.UpdateEntityAsync(updateEntity, existingNote.ETag, TableUpdateMode.Replace);
+        }
+    }
+}
