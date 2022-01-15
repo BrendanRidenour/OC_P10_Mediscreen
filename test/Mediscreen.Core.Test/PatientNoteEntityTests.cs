@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Xunit;
 using static ThoughtHaven.TestHelpers;
 
@@ -21,6 +22,14 @@ namespace Mediscreen
             var attribute = GetPropertyAttribute<PatientNoteEntity, DisplayAttribute>("Id");
 
             Assert.Equal("Note Id", attribute.Name);
+        }
+
+        [Fact]
+        public void PatientId_HasJsonPropertyName()
+        {
+            var attribute = GetPropertyAttribute<PatientNoteEntity, JsonPropertyNameAttribute>("Id");
+
+            Assert.Equal("noteId", attribute.Name);
         }
 
         [Theory]

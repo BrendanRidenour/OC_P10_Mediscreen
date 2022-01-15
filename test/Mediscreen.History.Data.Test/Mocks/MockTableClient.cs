@@ -29,7 +29,7 @@ namespace Mediscreen.Data.Mocks
 
         public string? QueryAsync_ParamFilter;
         public MockAsyncPageable QueryAsync_Return = new();
-        public override AsyncPageable<T> QueryAsync<T>(string filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        public override AsyncPageable<T> QueryAsync<T>(string filter, int? maxPerPage = null, IEnumerable<string> select = null!, CancellationToken cancellationToken = default)
         {
             QueryAsync_ParamFilter = filter;
 
@@ -49,7 +49,7 @@ namespace Mediscreen.Data.Mocks
             Timestamp = DateTimeOffset.UtcNow,
             ETag = new ETag("123"),
         };
-        public override Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        public override Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null!, CancellationToken cancellationToken = default)
         {
             GetEntityAsync_PartitionKey = partitionKey;
             GetEntityAsync_RowKey = rowKey;

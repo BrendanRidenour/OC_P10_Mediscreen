@@ -11,7 +11,7 @@ namespace Mediscreen.Controllers
 
         public PatientsController(IPatientService patientService)
         {
-            _patientService = patientService;
+            _patientService = patientService ?? throw new ArgumentNullException(nameof(patientService));
         }
 
         [HttpPost]
@@ -23,8 +23,7 @@ namespace Mediscreen.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<PatientEntity>> Read() =>
-            _patientService.Read();
+        public Task<IEnumerable<PatientEntity>> Read() => _patientService.Read();
 
         [HttpGet]
         [Route("{id}")]

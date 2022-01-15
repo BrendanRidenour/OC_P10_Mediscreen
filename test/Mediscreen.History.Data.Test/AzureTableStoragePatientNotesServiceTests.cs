@@ -27,7 +27,7 @@ namespace Mediscreen.Data
             var entity = await service.Create(note);
 
             Assert.True(entity.Id != Guid.Empty);
-            Assert.Equal(service.TableClient.AddEntityAsync_ParamEntity, entity);
+            Assert.Equal(service.TableClient.AddEntityAsync_ParamEntity!.Id, entity.Id);
             Assert.Equal(note.PatientId, entity.PatientId);
             Assert.Equal(note.Text, entity.Text);
         }
@@ -43,10 +43,10 @@ namespace Mediscreen.Data
 
             Assert.Equal($"PartitionKey eq '{partitionKey}'", service.TableClient.QueryAsync_ParamFilter);
             Assert.Equal(2, entities.Count());
-            Assert.Equal(service.TableClient.QueryAsync_Return.AsPages_Result!.ElementAt(0),
-                entities.ElementAt(0));
-            Assert.Equal(service.TableClient.QueryAsync_Return.AsPages_Result!.ElementAt(1),
-                entities.ElementAt(1));
+            Assert.Equal(service.TableClient.QueryAsync_Return.AsPages_Result!.ElementAt(0).Id,
+                entities.ElementAt(0).Id);
+            Assert.Equal(service.TableClient.QueryAsync_Return.AsPages_Result!.ElementAt(1).Id,
+                entities.ElementAt(1).Id);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Mediscreen.Data
                 service.TableClient.GetEntityAsync_PartitionKey);
             Assert.Equal(PatientNoteTableEntity.CreateRowKey(noteId),
                 service.TableClient.GetEntityAsync_RowKey);
-            Assert.Equal(service.TableClient.GetEntityAsync_Return, entity);
+            Assert.Equal(service.TableClient.GetEntityAsync_Return!.Id, entity!.Id);
         }
 
         [Theory]
@@ -122,7 +122,7 @@ namespace Mediscreen.Data
             Text = text,
         };
         static TestAzureTableStoragePatientNotesService Service(MockTableClient? tableClient = null) =>
-            new TestAzureTableStoragePatientNotesService(tableClient ?? new MockTableClient());
+            new(tableClient ?? new MockTableClient());
         class TestAzureTableStoragePatientNotesService : AzureTableStoragePatientNotesService
         {
             public MockTableClient TableClient { get; }

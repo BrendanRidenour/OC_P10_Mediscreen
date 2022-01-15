@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Mediscreen
 {
@@ -6,6 +7,7 @@ namespace Mediscreen
     {
         [Required]
         [Display(Name = "Note Id")]
+        [JsonPropertyName("noteId")]
         public virtual Guid Id { get; set; }
 
         public PatientNoteEntity(PatientNoteEntity note)

@@ -38,7 +38,7 @@ namespace Mediscreen.Data
 
             await tables.AddEntityAsync(entity);
 
-            return entity;
+            return new PatientNoteEntity(entity);
         }
 
         public async Task<IEnumerable<PatientNoteEntity>> Read(Guid patientId)
@@ -55,13 +55,17 @@ namespace Mediscreen.Data
             await foreach (var page in results.AsPages())
                 foreach (var entity in page.Values)
                     if (entity is not null)
-                        notes.Add(entity);
+                        notes.Add(new PatientNoteEntity(entity));
 
             return notes;
         }
 
-        public async Task<PatientNoteEntity?> Read(Guid patientId, Guid noteId) =>
-            await ReadEntity(patientId, noteId);
+        public async Task<PatientNoteEntity?> Read(Guid patientId, Guid noteId)
+        {
+            var entity = await ReadEntity(patientId, noteId);
+
+            return new PatientNoteEntity(entity);
+        }
 
         protected async Task<PatientNoteTableEntity> ReadEntity(Guid patientId, Guid noteId)
         {

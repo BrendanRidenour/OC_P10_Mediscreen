@@ -233,7 +233,7 @@ namespace Mediscreen.Controllers
 
             await controller.Update(id, patient);
 
-            Assert.Equal(patientService.Update_ParamEntity, patientService.ReadById_Return);
+            Assert.Equal(patientService.ReadById_Return, patientService.Update_ParamEntity);
         }
 
         [Fact]
