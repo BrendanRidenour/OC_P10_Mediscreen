@@ -7,13 +7,13 @@ using Xunit;
 
 namespace Mediscreen.Data
 {
-    public class AzureTableStoragePatientNotesServiceTests
+    public class AzureTableStoragePatientNoteServiceTests
     {
         [Fact]
         public void ImplementsIPatientNotesService()
         {
-            Assert.True(typeof(IPatientNotesService)
-                .IsAssignableFrom(typeof(AzureTableStoragePatientNotesService)));
+            Assert.True(typeof(IPatientNoteService)
+                .IsAssignableFrom(typeof(AzureTableStoragePatientNoteService)));
         }
 
         [Theory]
@@ -123,7 +123,7 @@ namespace Mediscreen.Data
         };
         static TestAzureTableStoragePatientNotesService Service(MockTableClient? tableClient = null) =>
             new(tableClient ?? new MockTableClient());
-        class TestAzureTableStoragePatientNotesService : AzureTableStoragePatientNotesService
+        class TestAzureTableStoragePatientNotesService : AzureTableStoragePatientNoteService
         {
             public MockTableClient TableClient { get; }
 

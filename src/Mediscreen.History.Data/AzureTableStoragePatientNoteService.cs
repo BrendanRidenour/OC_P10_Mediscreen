@@ -2,11 +2,11 @@
 
 namespace Mediscreen.Data
 {
-    public class AzureTableStoragePatientNotesService : IPatientNotesService
+    public class AzureTableStoragePatientNoteService : IPatientNoteService
     {
         readonly string _connectionString;
 
-        public AzureTableStoragePatientNotesService(string connectionString)
+        public AzureTableStoragePatientNoteService(string connectionString)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {

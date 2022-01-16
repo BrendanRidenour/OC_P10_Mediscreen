@@ -1,6 +1,6 @@
 ﻿namespace Mediscreen.Data
 {
-    public interface IPatientNotesService
+    public interface IPatientNoteService
     {
         public Task<PatientNoteEntity> Create(PatientNoteData note);
         public Task<IEnumerable<PatientNoteEntity>> Read(Guid patientId);

@@ -37,13 +37,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "History", "History", "{AA39
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "History", "History", "{81F2D605-1DE3-4BDA-ACCC-C3B4C63F68C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.History.Data", "src\Mediscreen.History.Data\Mediscreen.History.Data.csproj", "{8A126CEE-E240-44AF-9444-C68C655882CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.History.Data", "src\Mediscreen.History.Data\Mediscreen.History.Data.csproj", "{8A126CEE-E240-44AF-9444-C68C655882CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.History.Data.Test", "test\Mediscreen.History.Data.Test\Mediscreen.History.Data.Test.csproj", "{2D1EC606-8702-4FEE-A604-4130BBF86A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.History.Data.Test", "test\Mediscreen.History.Data.Test\Mediscreen.History.Data.Test.csproj", "{2D1EC606-8702-4FEE-A604-4130BBF86A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.History.WebApi", "src\Mediscreen.History.WebApi\Mediscreen.History.WebApi.csproj", "{64F193B7-CDEC-4433-A418-59857510D8D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.History.WebApi", "src\Mediscreen.History.WebApi\Mediscreen.History.WebApi.csproj", "{64F193B7-CDEC-4433-A418-59857510D8D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.History.WebApi.Test", "test\Mediscreen.History.WebApi.Test\Mediscreen.History.WebApi.Test.csproj", "{80F6CFDD-EFEB-4BBD-9416-E8C62E06495F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.History.WebApi.Test", "test\Mediscreen.History.WebApi.Test\Mediscreen.History.WebApi.Test.csproj", "{80F6CFDD-EFEB-4BBD-9416-E8C62E06495F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.History.WebApi.Client", "src\Mediscreen.History.WebApi.Client\Mediscreen.History.WebApi.Client.csproj", "{E3C74CD8-7C4F-4DD2-8B39-8993BB704CEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.History.WebApi.Client.Test", "test\Mediscreen.History.WebApi.Client.Test\Mediscreen.History.WebApi.Client.Test.csproj", "{7F61AEB2-3372-4D32-B366-18FDB347841E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,14 @@ Global
 		{80F6CFDD-EFEB-4BBD-9416-E8C62E06495F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F6CFDD-EFEB-4BBD-9416-E8C62E06495F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F6CFDD-EFEB-4BBD-9416-E8C62E06495F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C74CD8-7C4F-4DD2-8B39-8993BB704CEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C74CD8-7C4F-4DD2-8B39-8993BB704CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C74CD8-7C4F-4DD2-8B39-8993BB704CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C74CD8-7C4F-4DD2-8B39-8993BB704CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F61AEB2-3372-4D32-B366-18FDB347841E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F61AEB2-3372-4D32-B366-18FDB347841E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F61AEB2-3372-4D32-B366-18FDB347841E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F61AEB2-3372-4D32-B366-18FDB347841E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +147,8 @@ Global
 		{2D1EC606-8702-4FEE-A604-4130BBF86A43} = {81F2D605-1DE3-4BDA-ACCC-C3B4C63F68C9}
 		{64F193B7-CDEC-4433-A418-59857510D8D2} = {AA39F3A7-C360-4F9A-9D45-EFC5AB739D85}
 		{80F6CFDD-EFEB-4BBD-9416-E8C62E06495F} = {81F2D605-1DE3-4BDA-ACCC-C3B4C63F68C9}
+		{E3C74CD8-7C4F-4DD2-8B39-8993BB704CEE} = {AA39F3A7-C360-4F9A-9D45-EFC5AB739D85}
+		{7F61AEB2-3372-4D32-B366-18FDB347841E} = {81F2D605-1DE3-4BDA-ACCC-C3B4C63F68C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A88C93F7-82C2-4E11-BCCA-47CB8988CCB2}

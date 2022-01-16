@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Mediscreen.Mocks
 {
-    public class MockPatientNotesService : IPatientNotesService
+    public class MockPatientNoteService : IPatientNoteService
     {
         public PatientNoteData? Create_ParamNote;
         public PatientNoteEntity Create_Return = new()

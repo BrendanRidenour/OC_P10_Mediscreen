@@ -8,18 +8,18 @@ using static ThoughtHaven.TestHelpers;
 
 namespace Mediscreen.Controllers
 {
-    public class PatientNotesControllerTests
+    public class PatientNoteControllerTests
     {
         [Fact]
         public void InheritsController()
         {
-            Assert.True(typeof(ControllerBase).IsAssignableFrom(typeof(PatientNotesController)));
+            Assert.True(typeof(ControllerBase).IsAssignableFrom(typeof(PatientNoteController)));
         }
 
         [Fact]
         public void HasApiControllerAttribute()
         {
-            var attribute = GetClassAttribute<PatientNotesController, ApiControllerAttribute>();
+            var attribute = GetClassAttribute<PatientNoteController, ApiControllerAttribute>();
 
             Assert.NotNull(attribute);
         }
@@ -27,7 +27,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void HasRouteAttribute()
         {
-            var attribute = GetClassAttribute<PatientNotesController, RouteAttribute>();
+            var attribute = GetClassAttribute<PatientNoteController, RouteAttribute>();
 
             Assert.Equal("[controller]", attribute.Template);
         }
@@ -35,7 +35,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Create_PatientOverload_HasHttpPostAttribute()
         {
-            var attribute = GetMethodAttribute<PatientNotesController, HttpPostAttribute>("Create");
+            var attribute = GetMethodAttribute<PatientNoteController, HttpPostAttribute>("Create");
 
             Assert.NotNull(attribute);
         }
@@ -43,7 +43,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Create_PatientOverload_PatientHasFromBodyAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromBodyAttribute>("Create",
+            var attribute = GetParameterAttribute<PatientNoteController, FromBodyAttribute>("Create",
                 "note");
 
             Assert.NotNull(attribute);
@@ -52,7 +52,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public async Task Create_PatientOverload_WhenCalled_CallsCreateOnPatientService()
         {
-            var service = NotesService();
+            var service = NoteService();
             var controller = Controller(service);
             var note = NoteData();
 
@@ -64,7 +64,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public async Task Create_PatientOverload_WhenCalled_ReturnsCreatedAtActionResult()
         {
-            var service = NotesService();
+            var service = NoteService();
             var controller = Controller(service);
             var note = NoteData();
 
@@ -80,7 +80,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Read_PatientIdOverload_HasHttpGetAttribute()
         {
-            var attribute = GetMethodAttribute<PatientNotesController, HttpGetAttribute>("Read");
+            var attribute = GetMethodAttribute<PatientNoteController, HttpGetAttribute>("Read");
 
             Assert.NotNull(attribute);
         }
@@ -88,7 +88,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Read_PatientIdOverload_PatientIdHasHttpGetAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Read",
+            var attribute = GetParameterAttribute<PatientNoteController, FromRouteAttribute>("Read",
                 "patientId");
 
             Assert.NotNull(attribute);
@@ -97,7 +97,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public async Task Read_PatientIdOverload_WhenCalled_ReturnsReadOnPatientService()
         {
-            var service = NotesService();
+            var service = NoteService();
             var controller = Controller(service);
             var patientId = Guid.NewGuid();
 
@@ -110,7 +110,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Read_PatientIdAndNoteIdOverload_HasHttpGetAttribute()
         {
-            var attribute = GetMethodAttribute<PatientNotesController, HttpGetAttribute>("Read",
+            var attribute = GetMethodAttribute<PatientNoteController, HttpGetAttribute>("Read",
                 methodIndex: 1);
 
             Assert.NotNull(attribute);
@@ -119,7 +119,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Read_PatientIdAndNoteIdOverload_HasRouteAttribute()
         {
-            var attribute = GetMethodAttribute<PatientNotesController, RouteAttribute>("Read",
+            var attribute = GetMethodAttribute<PatientNoteController, RouteAttribute>("Read",
                 methodIndex: 1);
 
             Assert.Equal("{patientId}/{noteId}", attribute.Template);
@@ -128,7 +128,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Read_PatientIdAndNoteIdOverload_PatientIdHasFromRouteAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Read",
+            var attribute = GetParameterAttribute<PatientNoteController, FromRouteAttribute>("Read",
                 "patientId", methodIndex: 1);
 
             Assert.NotNull(attribute);
@@ -137,7 +137,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Read_PatientIdAndNoteIdOverload_NoteIdHasFromRouteAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Read",
+            var attribute = GetParameterAttribute<PatientNoteController, FromRouteAttribute>("Read",
                 "noteId", methodIndex: 1);
 
             Assert.NotNull(attribute);
@@ -148,7 +148,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
 
@@ -163,7 +163,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
 
@@ -177,7 +177,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
 
@@ -189,7 +189,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Update_PatientIdAndNoteIdAndNoteOverload_HasHttpPutAttribute()
         {
-            var attribute = GetMethodAttribute<PatientNotesController, HttpPutAttribute>("Update");
+            var attribute = GetMethodAttribute<PatientNoteController, HttpPutAttribute>("Update");
 
             Assert.NotNull(attribute);
         }
@@ -197,7 +197,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Update_PatientIdAndNoteIdAndNoteOverload_HasRouteAttribute()
         {
-            var attribute = GetMethodAttribute<PatientNotesController, RouteAttribute>("Update");
+            var attribute = GetMethodAttribute<PatientNoteController, RouteAttribute>("Update");
 
             Assert.Equal("{patientId}/{noteId}", attribute.Template);
         }
@@ -205,7 +205,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Update_PatientIdAndNoteIdAndNoteOverload_PatientIdHasFromRouteAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Update",
+            var attribute = GetParameterAttribute<PatientNoteController, FromRouteAttribute>("Update",
                 "patientId");
 
             Assert.NotNull(attribute);
@@ -214,7 +214,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Update_PatientIdAndNoteIdAndNoteOverload_NoteIdHasFromRouteAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Update",
+            var attribute = GetParameterAttribute<PatientNoteController, FromRouteAttribute>("Update",
                 "noteId");
 
             Assert.NotNull(attribute);
@@ -223,7 +223,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Update_PatientIdAndNoteIdAndNoteOverload_NoteHasFromBodyAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, FromBodyAttribute>("Update",
+            var attribute = GetParameterAttribute<PatientNoteController, FromBodyAttribute>("Update",
                 "text");
 
             Assert.NotNull(attribute);
@@ -232,7 +232,7 @@ namespace Mediscreen.Controllers
         [Fact]
         public void Update_PatientIdAndNoteIdAndNoteOverload_NoteHasRequiredAttribute()
         {
-            var attribute = GetParameterAttribute<PatientNotesController, RequiredAttribute>("Update",
+            var attribute = GetParameterAttribute<PatientNoteController, RequiredAttribute>("Update",
                 "text");
 
             Assert.NotNull(attribute);
@@ -243,7 +243,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
             string text = "note text";
@@ -259,7 +259,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
             var text = "note text";
@@ -277,7 +277,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = NoteEntity();
             var controller = Controller(service);
 
@@ -293,7 +293,7 @@ namespace Mediscreen.Controllers
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
-            var service = NotesService();
+            var service = NoteService();
             service.ReadByNoteId_Return = NoteEntity();
             var controller = Controller(service);
             var text = "note text";
@@ -303,8 +303,8 @@ namespace Mediscreen.Controllers
             Assert.IsType<NoContentResult>(updateResult);
         }
 
-        static MockPatientNotesService NotesService() => new();
-        static PatientNotesController Controller(MockPatientNotesService notesService) => new(notesService);
+        static MockPatientNoteService NoteService() => new();
+        static PatientNoteController Controller(MockPatientNoteService notesService) => new(notesService);
         static PatientNoteData NoteData(string text = "note text") => new()
         {
             PatientId = Guid.NewGuid(),

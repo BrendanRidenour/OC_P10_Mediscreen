@@ -2,8 +2,8 @@ using Mediscreen.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IPatientNotesService>(
-    new AzureTableStoragePatientNotesService(builder.Configuration["Data:AzureTableStorage:ConnectionString"]));
+builder.Services.AddSingleton<IPatientNoteService>(
+    new AzureTableStoragePatientNoteService(builder.Configuration["Data:AzureTableStorage:ConnectionString"]));
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();

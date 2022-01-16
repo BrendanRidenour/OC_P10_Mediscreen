@@ -6,11 +6,11 @@ namespace Mediscreen.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PatientNotesController : ControllerBase
+    public class PatientNoteController : ControllerBase
     {
-        readonly IPatientNotesService _notesService;
+        readonly IPatientNoteService _notesService;
 
-        public PatientNotesController(IPatientNotesService notesService)
+        public PatientNoteController(IPatientNoteService notesService)
         {
             _notesService = notesService ?? throw new ArgumentNullException(nameof(notesService));
         }

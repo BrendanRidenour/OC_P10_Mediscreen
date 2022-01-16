@@ -149,6 +149,7 @@ namespace Mediscreen.Data
 
             Assert.Equal(id, result!.Id);
         }
+
         [Theory]
         [InlineData("GN1")]
         [InlineData("GN2")]
@@ -181,7 +182,7 @@ namespace Mediscreen.Data
 
             var exception = await Assert.ThrowsAsync<HttpRequestException>(async () =>
             {
-                await patientService.Create(PatientData());
+                await patientService.Update(PatientEntity());
             });
 
             Assert.Equal((HttpStatusCode)code, exception.StatusCode);
