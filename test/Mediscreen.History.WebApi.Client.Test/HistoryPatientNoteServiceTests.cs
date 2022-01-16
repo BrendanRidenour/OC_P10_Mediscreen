@@ -168,11 +168,13 @@ namespace Mediscreen.Data
             await service.Update(updateEntity);
 
             Assert.Equal(HttpMethod.Put, http.SendAsync_ParamRequest.Method);
-            Assert.Equal(new Uri($"https://example.com/patientnotes/{updateEntity.PatientId}/{updateEntity.Id}"),
+            Assert.Equal(new Uri($"https://example.com/patientnotes"),
                 http.SendAsync_ParamRequest.RequestUri);
 
-            var putText = await http.SendAsync_ParamRequest.Content!.ReadFromJsonAsync<string>();
-            Assert.Equal(updateEntity.Text, putText);
+            var putEntity = await http.SendAsync_ParamRequest.Content!.ReadFromJsonAsync<PatientNoteEntity>();
+            Assert.Equal(updateEntity.PatientId, putEntity!.PatientId);
+            Assert.Equal(updateEntity.Id, putEntity.Id);
+            Assert.Equal(updateEntity.Text, putEntity.Text);
         }
 
         [Theory]

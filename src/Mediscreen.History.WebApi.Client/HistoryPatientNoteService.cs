@@ -46,8 +46,7 @@ namespace Mediscreen.Data
 
         public async Task Update(PatientNoteEntity note)
         {
-            var response = await _http.PutAsJsonAsync($"/patientnotes/{note.PatientId}/{note.Id}",
-                note.Text);
+            var response = await _http.PutAsJsonAsync($"/patientnotes", note);
 
             response.EnsureSuccessStatusCode();
         }
