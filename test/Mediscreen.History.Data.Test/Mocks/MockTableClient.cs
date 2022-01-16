@@ -29,15 +29,20 @@ namespace Mediscreen.Data.Mocks
 
         public string? QueryAsync_ParamFilter;
         public MockAsyncPageable QueryAsync_Return = new();
+        public bool QueryAsync_ThrowResourceNotFound = false;
         public override AsyncPageable<T> QueryAsync<T>(string filter, int? maxPerPage = null, IEnumerable<string> select = null!, CancellationToken cancellationToken = default)
         {
             QueryAsync_ParamFilter = filter;
+
+            if (QueryAsync_ThrowResourceNotFound)
+                throw new RequestFailedException(404, "Not Found", errorCode: "ResourceNotFound", innerException: null);
 
             return (QueryAsync_Return as AsyncPageable<T>)!;
         }
 
         public string? GetEntityAsync_PartitionKey;
         public string? GetEntityAsync_RowKey;
+        public bool GetEntityAsync_ThrowResourceNotFound = false;
         public PatientNoteTableEntity? GetEntityAsync_Return = new(new PatientNoteEntity(
             noteId: Guid.NewGuid(),
             note: new PatientNoteData()
@@ -53,6 +58,9 @@ namespace Mediscreen.Data.Mocks
         {
             GetEntityAsync_PartitionKey = partitionKey;
             GetEntityAsync_RowKey = rowKey;
+
+            if (GetEntityAsync_ThrowResourceNotFound)
+                throw new RequestFailedException(404, "Not Found", errorCode: "ResourceNotFound", innerException: null);
 
             return Task.FromResult((new MockResponse(GetEntityAsync_Return!) as Response<T>)!);
         }

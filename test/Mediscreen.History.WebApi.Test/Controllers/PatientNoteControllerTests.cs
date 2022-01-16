@@ -95,16 +95,29 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
+        public async Task Read_PatientIdOverload_PatientServiceReturnsNull_ReturnsNotFound()
+        {
+            var service = NoteService();
+            service.ReadByPatientId_Return = null!;
+            var controller = Controller(service);
+            var patientId = Guid.NewGuid();
+
+            var actionResult = await controller.Read(patientId);
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+        }
+
+        [Fact]
         public async Task Read_PatientIdOverload_WhenCalled_ReturnsReadOnPatientService()
         {
             var service = NoteService();
             var controller = Controller(service);
             var patientId = Guid.NewGuid();
 
-            var entities = await controller.Read(patientId);
+            var actionResult = await controller.Read(patientId);
 
             Assert.Equal(patientId, service.ReadByPatientId_ParamPatientId);
-            Assert.Equal(service.ReadByPatientId_Return, entities);
+            Assert.Equal(service.ReadByPatientId_Return, actionResult.Value);
         }
 
         [Fact]
@@ -187,7 +200,7 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
-        public void Update_PatientIdAndNoteIdAndNoteOverload_HasHttpPutAttribute()
+        public void Update_NoteOverload_HasHttpPutAttribute()
         {
             var attribute = GetMethodAttribute<PatientNotesController, HttpPutAttribute>("Update");
 
@@ -195,51 +208,16 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
-        public void Update_PatientIdAndNoteIdAndNoteOverload_HasRouteAttribute()
-        {
-            var attribute = GetMethodAttribute<PatientNotesController, RouteAttribute>("Update");
-
-            Assert.Equal("{patientId}/{noteId}", attribute.Template);
-        }
-
-        [Fact]
-        public void Update_PatientIdAndNoteIdAndNoteOverload_PatientIdHasFromRouteAttribute()
-        {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Update",
-                "patientId");
-
-            Assert.NotNull(attribute);
-        }
-
-        [Fact]
-        public void Update_PatientIdAndNoteIdAndNoteOverload_NoteIdHasFromRouteAttribute()
-        {
-            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("Update",
-                "noteId");
-
-            Assert.NotNull(attribute);
-        }
-
-        [Fact]
-        public void Update_PatientIdAndNoteIdAndNoteOverload_NoteHasFromBodyAttribute()
+        public void Update_NoteOverload_NoteHasFromBodyAttribute()
         {
             var attribute = GetParameterAttribute<PatientNotesController, FromBodyAttribute>("Update",
-                "text");
+                "note");
 
             Assert.NotNull(attribute);
         }
 
         [Fact]
-        public void Update_PatientIdAndNoteIdAndNoteOverload_NoteHasRequiredAttribute()
-        {
-            var attribute = GetParameterAttribute<PatientNotesController, RequiredAttribute>("Update",
-                "text");
-
-            Assert.NotNull(attribute);
-        }
-
-        [Fact]
-        public async Task Update_PatientIdAndNoteIdAndNoteOverload_WhenCalled_CallsReadOnPatientService()
+        public async Task Update_NoteOverload_WhenCalled_CallsReadOnPatientService()
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
@@ -247,15 +225,21 @@ namespace Mediscreen.Controllers
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
             string text = "note text";
+            var note = new PatientNoteEntity()
+            {
+                PatientId = patientId,
+                Id = noteId,
+                Text = text,
+            };
 
-            await controller.Update(patientId, noteId, text);
+            await controller.Update(note);
 
             Assert.Equal(patientId, service.ReadByNoteId_ParamPatientId);
             Assert.Equal(noteId, service.ReadByNoteId_ParamNoteId);
         }
 
         [Fact]
-        public async Task Update_PatientIdAndNoteIdAndNoteOverload_NotesServiceReturnsNull_ReturnsNotFound()
+        public async Task Update_NoteOverload_NotesServiceReturnsNull_ReturnsNotFound()
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
@@ -263,8 +247,14 @@ namespace Mediscreen.Controllers
             service.ReadByNoteId_Return = null;
             var controller = Controller(service);
             var text = "note text";
+            var note = new PatientNoteEntity()
+            {
+                PatientId = patientId,
+                Id = noteId,
+                Text = text,
+            };
 
-            var updateResult = await controller.Update(patientId, noteId, text);
+            var updateResult = await controller.Update(note);
 
             Assert.IsType<NotFoundResult>(updateResult);
         }
@@ -272,16 +262,21 @@ namespace Mediscreen.Controllers
         [Theory]
         [InlineData("note text1")]
         [InlineData("note text2")]
-        public async Task Update_PatientIdAndNoteIdAndNoteOverload_WhenCalled_CallsUpdateOnNotesService(
-            string text)
+        public async Task Update_NoteOverload_WhenCalled_CallsUpdateOnNotesService(string text)
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
             var service = NoteService();
             service.ReadByNoteId_Return = NoteEntity();
             var controller = Controller(service);
+            var note = new PatientNoteEntity()
+            {
+                PatientId = patientId,
+                Id = noteId,
+                Text = text,
+            };
 
-            await controller.Update(patientId, noteId, text);
+            await controller.Update(note);
 
             Assert.Equal(noteId, service.Update_ParamNote!.Id);
             Assert.Equal(patientId, service.Update_ParamNote.PatientId);
@@ -289,7 +284,7 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
-        public async Task Update_PatientIdAndNoteIdAndNoteOverload_WhenCalled_ReturnsNoContentResult()
+        public async Task Update_NoteOverload_WhenCalled_ReturnsNoContentResult()
         {
             var patientId = Guid.NewGuid();
             var noteId = Guid.NewGuid();
@@ -297,8 +292,14 @@ namespace Mediscreen.Controllers
             service.ReadByNoteId_Return = NoteEntity();
             var controller = Controller(service);
             var text = "note text";
+            var note = new PatientNoteEntity()
+            {
+                PatientId = patientId,
+                Id = noteId,
+                Text = text,
+            };
 
-            var updateResult = await controller.Update(patientId, noteId, text);
+            var updateResult = await controller.Update(note);
 
             Assert.IsType<NoContentResult>(updateResult);
         }

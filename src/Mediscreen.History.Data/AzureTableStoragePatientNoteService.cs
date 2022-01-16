@@ -1,4 +1,5 @@
-﻿using Azure.Data.Tables;
+﻿using Azure;
+using Azure.Data.Tables;
 
 namespace Mediscreen.Data
 {
@@ -43,28 +44,44 @@ namespace Mediscreen.Data
 
         public async Task<IEnumerable<PatientNoteEntity>> Read(Guid patientId)
         {
-            var partitionKey = PatientNoteTableEntity.CreatePartitionKey(patientId);
+            try
+            {
+                var partitionKey = PatientNoteTableEntity.CreatePartitionKey(patientId);
 
-            var tables = await CreateTableClient();
+                var tables = await CreateTableClient();
 
-            var results = tables.QueryAsync<PatientNoteTableEntity>(
-                filter: $"PartitionKey eq '{partitionKey}'");
+                var results = tables.QueryAsync<PatientNoteTableEntity>(
+                    filter: $"PartitionKey eq '{partitionKey}'");
 
-            var notes = new List<PatientNoteEntity>();
+                var notes = new List<PatientNoteEntity>();
 
-            await foreach (var page in results.AsPages())
-                foreach (var entity in page.Values)
-                    if (entity is not null)
-                        notes.Add(new PatientNoteEntity(entity));
+                await foreach (var page in results.AsPages())
+                    foreach (var entity in page.Values)
+                        if (entity is not null)
+                            notes.Add(new PatientNoteEntity(entity));
 
-            return notes;
+                return notes;
+            }
+            catch (RequestFailedException exception)
+            when (exception.ErrorCode == "ResourceNotFound")
+            {
+                return null!;
+            }
         }
 
         public async Task<PatientNoteEntity?> Read(Guid patientId, Guid noteId)
         {
-            var entity = await ReadEntity(patientId, noteId);
+            try
+            {
+                var entity = await ReadEntity(patientId, noteId);
 
-            return new PatientNoteEntity(entity);
+                return new PatientNoteEntity(entity);
+            }
+            catch (RequestFailedException exception)
+            when (exception.ErrorCode == "ResourceNotFound")
+            {
+                return null;
+            }
         }
 
         protected async Task<PatientNoteTableEntity> ReadEntity(Guid patientId, Guid noteId)

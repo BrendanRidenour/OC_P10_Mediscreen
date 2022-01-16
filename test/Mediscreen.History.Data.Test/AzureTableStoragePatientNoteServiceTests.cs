@@ -50,6 +50,18 @@ namespace Mediscreen.Data
         }
 
         [Fact]
+        public async Task ReadByPatientId_TableClientThrowsRequestFailedException_ReturnsNull()
+        {
+            var patientId = Guid.NewGuid();
+            var service = Service();
+            service.TableClient.QueryAsync_ThrowResourceNotFound = true;
+
+            var entities = await service.Read(patientId);
+
+            Assert.Null(entities);
+        }
+
+        [Fact]
         public async Task ReadByPatientIdAndNoteId_WhenCalled_CallsTableGetEntityAsync()
         {
             var patientId = Guid.NewGuid();
@@ -63,6 +75,19 @@ namespace Mediscreen.Data
             Assert.Equal(PatientNoteTableEntity.CreateRowKey(noteId),
                 service.TableClient.GetEntityAsync_RowKey);
             Assert.Equal(service.TableClient.GetEntityAsync_Return!.Id, entity!.Id);
+        }
+
+        [Fact]
+        public async Task ReadByPatientIdAndNoteId_TableGetEntityThrowsResourceNotFound_ReturnsNull()
+        {
+            var patientId = Guid.NewGuid();
+            var noteId = Guid.NewGuid();
+            var service = Service();
+            service.TableClient.GetEntityAsync_ThrowResourceNotFound = true;
+
+            var entity = await service.Read(patientId, noteId);
+
+            Assert.Null(entity);
         }
 
         [Theory]

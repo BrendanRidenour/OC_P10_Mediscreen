@@ -25,8 +25,15 @@ namespace Mediscreen.Controllers
 
         [HttpGet]
         [Route("{patientId}")]
-        public Task<IEnumerable<PatientNoteEntity>> Read([FromRoute] Guid patientId) =>
-            _notesService.Read(patientId);
+        public async Task<ActionResult<IEnumerable<PatientNoteEntity>>> Read([FromRoute] Guid patientId)
+        {
+            var entities = await _notesService.Read(patientId);
+
+            if (entities is null)
+                return NotFound();
+
+            return entities.ToArray();
+        }
 
         [HttpGet]
         [Route("{patientId}/{noteId}")]
@@ -41,23 +48,14 @@ namespace Mediscreen.Controllers
         }
 
         [HttpPut]
-        [Route("{patientId}/{noteId}")]
-        public async Task<IActionResult> Update([FromRoute] Guid patientId, [FromRoute] Guid noteId,
-            [FromBody, Required] string text)
+        public async Task<IActionResult> Update([FromBody] PatientNoteEntity note)
         {
-            var entity = await _notesService.Read(patientId, noteId);
+            var entity = await _notesService.Read(note.PatientId, note.Id);
 
             if (entity is null)
                 return NotFound();
 
-            entity = new PatientNoteEntity()
-            {
-                PatientId = patientId,
-                Id = noteId,
-                Text = text,
-            };
-
-            await _notesService.Update(entity);
+            await _notesService.Update(note);
 
             return NoContent();
         }
