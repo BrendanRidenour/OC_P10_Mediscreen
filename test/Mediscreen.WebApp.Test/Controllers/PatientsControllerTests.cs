@@ -60,6 +60,20 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
+        public async Task CreatePatient_PatientOverload_ModelStateIsNotValid_ReturnsView()
+        {
+            var patientService = PatientService();
+            var controller = Controller(patientService);
+            controller.ModelState.AddModelError(string.Empty, "Model Error");
+            var patient = PatientData();
+
+            var result = await controller.CreatePatient(patient);
+
+            var view = Assert.IsType<ViewResult>(result);
+            Assert.Equal(patient, view.Model);
+        }
+
+        [Fact]
         public async Task CreatePatient_PatientOverload_CallsCreateOnPatientService()
         {
             var patientService = PatientService();
@@ -68,7 +82,7 @@ namespace Mediscreen.Controllers
 
             await controller.CreatePatient(patient);
 
-            Assert.Equal(patientService.Create_ParamPatient, patient);
+            Assert.Equal(patient, patientService.Create_ParamPatient);
         }
 
         [Fact]

@@ -9,6 +9,11 @@ builder.Services.AddHttpClient<IPatientService, DemographicsPatientService>(clie
     client.BaseAddress = new Uri(
         builder.Configuration["ExternalServices:DemographicsWebApi:BaseAddress"]);
 });
+builder.Services.AddHttpClient<IPatientNoteService, HistoryPatientNoteService>(client =>
+{
+    client.BaseAddress = new Uri(
+        builder.Configuration["ExternalServices:HistoryWebApi:BaseAddress"]);
+});
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();

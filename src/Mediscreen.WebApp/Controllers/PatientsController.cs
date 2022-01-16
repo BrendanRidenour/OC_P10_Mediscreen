@@ -32,7 +32,7 @@ namespace Mediscreen.Controllers
         {
             var patients = await _patientService.Read();
 
-            return View(patients ?? new List<PatientEntity>());
+            return View(patients ?? Array.Empty<PatientEntity>());
         }
 
         [HttpGet("{id}")]
