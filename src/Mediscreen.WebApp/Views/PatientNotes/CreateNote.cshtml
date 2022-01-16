@@ -1,0 +1,24 @@
+﻿@model PatientViewModel<string>
+@{
+    ViewBag.Title = "Write a Note";
+}
+
+<section id="create-note">
+    <h1>@ViewBag.Title</h1>
+    <h3>Add a note for @Model!.Patient.GetFullName()</h3>
+    <form method="post">
+        <div class="row mt-5 mb-2">
+            <div class="col">
+                <label asp-for="Value">Note Text</label><span class="required-field">&lowast;</span>
+                <textarea class="form-control" asp-for="Value" name="text" rows="4" autofocus></textarea>
+                <div asp-validation-summary="All"></div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <a class="btn btn-secondary" asp-controller="PatientNotes" asp-action="ReadNotes" asp-route-patientId="@Model.Patient.Id">Cancel</a>
+                <button type="submit" class="btn btn-primary">Add Note</button>
+            </div>
+        </div>
+    </form>
+</section>

@@ -24,6 +24,7 @@
                         <div class="btn-group" role="group" aria-label="@patient.GetFullName() actions">
                             <a class="btn btn-outline-primary" asp-controller="Patients" asp-action="ReadPatient" asp-route-id="@patient.Id">Details</a>
                             <a class="btn btn-outline-primary" asp-controller="Patients" asp-action="UpdatePatient" asp-route-id="@patient.Id">Update</a>
+                            <a class="btn btn-outline-primary" asp-controller="PatientNotes" asp-action="ReadNotes" asp-route-patientId="@patient.Id">Notes</a>
                         </div>
                     </td>
                 </tr>

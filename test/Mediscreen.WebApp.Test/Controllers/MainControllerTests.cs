@@ -21,14 +21,15 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
-        public void Home_ReturnsView()
+        public void Home_ReturnsRedirectToAction()
         {
             var controller = new MainController();
 
             var result = controller.Home();
 
-            var view = Assert.IsType<ViewResult>(result);
-            Assert.Null(view.ViewName);
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("ReadPatients", redirect.ActionName);
+            Assert.Equal("Patients", redirect.ControllerName);
         }
     }
 }

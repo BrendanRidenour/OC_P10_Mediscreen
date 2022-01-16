@@ -1,4 +1,5 @@
 ﻿using Mediscreen.Data;
+using Mediscreen.Models.PatientNotes;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,21 +8,42 @@ namespace Mediscreen.Controllers
     [Route("[controller]/{patientId}")]
     public class PatientNotesController : Controller
     {
+        readonly IPatientService _patientService;
         readonly IPatientNoteService _noteService;
 
-        public PatientNotesController(IPatientNoteService noteService)
+        public PatientNotesController(IPatientService patientService, IPatientNoteService noteService)
         {
+            _patientService = patientService ?? throw new ArgumentNullException(nameof(patientService));
             _noteService = noteService ?? throw new ArgumentNullException(nameof(noteService));
         }
 
         [HttpGet("create")]
-        public IActionResult CreateNote() => View();
+        public async Task<IActionResult> CreateNote([FromRoute] Guid patientId)
+        {
+            var patient = await _patientService.Read(patientId);
+
+            if (patient is null)
+                return NotFound();
+
+            var viewModel = new PatientViewModel<string>(patient, value: string.Empty);
+
+            return View(viewModel);
+        }
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateNote([FromRoute] Guid patientId, [FromForm, Required] string text)
         {
+            var patient = await _patientService.Read(patientId);
+
+            if (patient is null)
+                return NotFound();
+
             if (!ModelState.IsValid)
-                return View(model: text);
+            {
+                var viewModel = new PatientViewModel<string>(patient, text);
+
+                return View(viewModel);
+            }
 
             var note = new PatientNoteData()
             {
@@ -31,46 +53,57 @@ namespace Mediscreen.Controllers
 
             var entity = await _noteService.Create(note);
 
-            return RedirectToAction(actionName: nameof(ReadNote),
-                new { patientId = entity.PatientId, noteId = entity.Id });
+            return RedirectToAction(actionName: nameof(ReadNotes), new { patientId = entity.PatientId });
         }
 
         [HttpGet]
         public async Task<IActionResult> ReadNotes([FromRoute] Guid patientId)
         {
-            var notes = await _noteService.Read(patientId);
+            var patient = await _patientService.Read(patientId);
 
-            return View(notes ?? Array.Empty<PatientNoteEntity>());
-        }
-
-        [HttpGet("{noteId}")]
-        public async Task<IActionResult> ReadNote([FromRoute] Guid patientId, [FromRoute] Guid noteId)
-        {
-            var note = await _noteService.Read(patientId, noteId);
-
-            if (note is null)
+            if (patient is null)
                 return NotFound();
 
-            return View(note);
+            var notes = await _noteService.Read(patientId);
+
+            var viewModel = new PatientViewModel<IEnumerable<PatientNoteEntity>>(patient, notes);
+
+            return View(viewModel);
         }
 
         [HttpGet("{noteId}/update")]
         public async Task<IActionResult> UpdateNote([FromRoute] Guid patientId, [FromRoute] Guid noteId)
         {
+            var patient = await _patientService.Read(patientId);
+
+            if (patient is null)
+                return NotFound();
+
             var note = await _noteService.Read(patientId, noteId);
 
             if (note is null)
                 return NotFound();
 
-            return View(note);
+            var viewModel = new PatientViewModel<string>(patient, note.Text);
+
+            return View(viewModel);
         }
 
         [HttpPost("{noteId}/update")]
         public async Task<IActionResult> UpdateNote([FromRoute] Guid patientId, [FromRoute] Guid noteId,
             [FromForm, Required] string text)
         {
+            var patient = await _patientService.Read(patientId);
+
+            if (patient is null)
+                return NotFound();
+
             if (!ModelState.IsValid)
-                return View(model: text);
+            {
+                var viewModel = new PatientViewModel<string>(patient, text);
+
+                return View(viewModel);
+            }
 
             var note = new PatientNoteEntity()
             {
@@ -81,7 +114,7 @@ namespace Mediscreen.Controllers
 
             await _noteService.Update(note);
 
-            return RedirectToAction(actionName: nameof(ReadNote), new { patientId, noteId });
+            return RedirectToAction(actionName: nameof(ReadNotes), new { patientId });
         }
     }
 }

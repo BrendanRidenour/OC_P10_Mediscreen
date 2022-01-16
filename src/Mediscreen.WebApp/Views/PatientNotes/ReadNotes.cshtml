@@ -1,6 +1,31 @@
-﻿@model IEnumerable<PatientNoteEntity>
+﻿@model PatientViewModel<IEnumerable<PatientNoteEntity>>
 @{
-    ViewBag.Title = "View Patient Notes";
+    ViewBag.Title = $"Patient Notes for {Model!.Patient.GetFullName()}";
 }
 
-<h1>@ViewBag.Title</h1>
+<section id="patient-notes">
+    <h1>@ViewBag.Title</h1>
+    @if (Model!.Value.Any())
+    {
+        <h3>Below is a list of notes about this patient</h3>
+    }
+    else
+    {
+        <h3>This patient doesn't currently have any notes in their history</h3>
+    }
+    <div class="mt-4">
+        <a class="btn btn-primary" asp-controller="Patients" asp-action="ReadPatient" asp-route-id="@Model.Patient.Id">Patient Details</a>
+        <a class="btn btn-primary" asp-controller="PatientNotes" asp-action="CreateNote" asp-route-patientId="@Model.Patient.Id">Add a Note</a>
+    </div>
+    @foreach (var note in Model.Value)
+    {
+        <div class="row mt-4">
+            <div class="col">
+                <textarea class="form-control" rows="4" readonly>@note.Text</textarea>
+                <div>
+                    <a class="btn btn-outline-primary" asp-controller="PatientNotes" asp-action="UpdateNote" asp-route-patientId="@note.PatientId" asp-route-noteId="@note.Id">Update Note</a>
+                </div>
+            </div>
+        </div>
+    }
+</section>
