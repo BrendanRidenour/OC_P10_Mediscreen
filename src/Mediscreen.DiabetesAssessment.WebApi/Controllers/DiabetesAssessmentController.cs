@@ -14,8 +14,7 @@ namespace Mediscreen.Controllers
             _assessmentService = assessmentService ?? throw new ArgumentNullException(nameof(assessmentService));
         }
 
-        [HttpPost]
-        [Route("{patientId}")]
+        [HttpGet("{patientId}")]
         public async Task<ActionResult<string>> GenerateDiabetesReport([FromRoute] Guid patientId)
         {
             var result = await _assessmentService.GenerateDiabetesReport(patientId);

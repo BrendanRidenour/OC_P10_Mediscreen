@@ -32,18 +32,9 @@ namespace Mediscreen.Controllers
         }
 
         [Fact]
-        public void GenerateDiabetesReport_PatientIdOverload_HasHttpPostAttribute()
+        public void GenerateDiabetesReport_PatientIdOverload_HasHttpGetAttribute()
         {
-            var attribute = GetMethodAttribute<DiabetesAssessmentController, HttpPostAttribute>(
-                "GenerateDiabetesReport");
-
-            Assert.NotNull(attribute);
-        }
-
-        [Fact]
-        public void GenerateDiabetesReport_PatientIdOverload_HasRouteAttribute()
-        {
-            var attribute = GetMethodAttribute<DiabetesAssessmentController, RouteAttribute>(
+            var attribute = GetMethodAttribute<DiabetesAssessmentController, HttpGetAttribute>(
                 "GenerateDiabetesReport");
 
             Assert.Equal("{patientId}", attribute.Template);
