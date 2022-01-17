@@ -1,4 +1,5 @@
 ﻿using Mediscreen.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 using static ThoughtHaven.TestHelpers;
@@ -156,6 +157,27 @@ namespace Mediscreen
             };
 
             Assert.Equal($"{givenName} {familyName}", patient.GetFullName());
+        }
+
+        [Theory]
+        [InlineData(1990, 6, 1, 10)]
+        [InlineData(1998, 5, 31, 2)]
+        [InlineData(1998, 6, 1, 2)]
+        [InlineData(1998, 6, 2, 1)]
+        [InlineData(1999, 6, 1, 1)]
+        [InlineData(1999, 6, 2, 0)]
+        [InlineData(2000, 6, 1, 0)]
+        [InlineData(2000, 5, 31, 0)]
+        [InlineData(2001, 6, 1, 0)]
+        public void GetAge_WhenCalled_ReturnsAge(int year, int month, int day, int expectedAge)
+        {
+            var date = new Date(year, month, day);
+            var patient = new PatientData() { DateOfBirth = date };
+            var today = new DateTimeOffset(year: 2000, month: 6, day: 1, hour: 0, minute: 0, second: 0, offset: TimeSpan.Zero);
+
+            var age = patient.GetAge(today);
+
+            Assert.Equal(expectedAge, age);
         }
     }
 }

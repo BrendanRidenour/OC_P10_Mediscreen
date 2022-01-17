@@ -11,7 +11,7 @@
     }
     else
     {
-        <h3>This patient doesn't currently have any notes in their history</h3>
+        <h3>This patient doesn't have any notes in their history yet</h3>
     }
     <div class="mt-4">
         <a class="btn btn-primary" asp-controller="Patients" asp-action="ReadPatient" asp-route-id="@Model.Patient.Id">Patient Details</a>
@@ -21,7 +21,7 @@
     {
         <div class="row mt-4">
             <div class="col">
-                <textarea class="form-control" rows="4" readonly>@note.Text</textarea>
+                <textarea class="form-control" rows="4" disabled readonly>@note.Text</textarea>
                 <div>
                     <a class="btn btn-outline-primary" asp-controller="PatientNotes" asp-action="UpdateNote" asp-route-patientId="@note.PatientId" asp-route-noteId="@note.Id">Update Note</a>
                 </div>

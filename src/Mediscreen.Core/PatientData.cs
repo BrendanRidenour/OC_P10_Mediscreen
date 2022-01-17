@@ -34,5 +34,24 @@ namespace Mediscreen
         public virtual string? PhoneNumber { get; set; }
 
         public virtual string GetFullName() => $"{this.GivenName} {this.FamilyName}";
+
+        public int GetAge(DateTimeOffset today)
+        {
+            today = today.ToUniversalTime();
+            var dob = new DateTimeOffset(DateOfBirth.Year, DateOfBirth.Month, DateOfBirth.Day,
+                hour: 0, minute: 0, second: 0, offset: TimeSpan.Zero);
+
+            var age = 0;
+            var counter = dob.AddYears(1);
+
+            while (counter <= today)
+            {
+                age++;
+
+                counter = counter.AddYears(1);
+            }
+
+            return age;
+        }
     }
 }
