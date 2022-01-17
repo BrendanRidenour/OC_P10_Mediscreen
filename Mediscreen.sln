@@ -55,7 +55,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiabetesAssessment", "Diabe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.DiabetesAssessment.Data", "src\Mediscreen.DiabetesAssessment.Data\Mediscreen.DiabetesAssessment.Data.csproj", "{7FD5B435-E874-476C-92DF-AA6A01DF9AF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.DiabetesAssessment.Data.Test", "test\Mediscreen.DiabetesAssessment.Data.Test\Mediscreen.DiabetesAssessment.Data.Test.csproj", "{CAD7F9C1-263C-4F8D-A04E-BE9B36AFA7B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.DiabetesAssessment.Data.Test", "test\Mediscreen.DiabetesAssessment.Data.Test\Mediscreen.DiabetesAssessment.Data.Test.csproj", "{CAD7F9C1-263C-4F8D-A04E-BE9B36AFA7B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.DiabetesAssessment.WebApi", "src\Mediscreen.DiabetesAssessment.WebApi\Mediscreen.DiabetesAssessment.WebApi.csproj", "{8B78DDBA-BBE2-4678-B600-7248A514421A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.DiabetesAssessment.WebApi.Test", "test\Mediscreen.DiabetesAssessment.WebApi.Test\Mediscreen.DiabetesAssessment.WebApi.Test.csproj", "{F59E563C-E136-4AAD-9EA3-AB03D2890320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,6 +143,14 @@ Global
 		{CAD7F9C1-263C-4F8D-A04E-BE9B36AFA7B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAD7F9C1-263C-4F8D-A04E-BE9B36AFA7B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAD7F9C1-263C-4F8D-A04E-BE9B36AFA7B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B78DDBA-BBE2-4678-B600-7248A514421A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B78DDBA-BBE2-4678-B600-7248A514421A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B78DDBA-BBE2-4678-B600-7248A514421A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B78DDBA-BBE2-4678-B600-7248A514421A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F59E563C-E136-4AAD-9EA3-AB03D2890320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F59E563C-E136-4AAD-9EA3-AB03D2890320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F59E563C-E136-4AAD-9EA3-AB03D2890320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F59E563C-E136-4AAD-9EA3-AB03D2890320}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -169,6 +181,8 @@ Global
 		{F98BDD83-E5F3-43AA-BF59-7138B18C2294} = {D075C1D1-9C19-4E9C-83CB-E1FF21E2DC67}
 		{7FD5B435-E874-476C-92DF-AA6A01DF9AF3} = {B5C72662-73C4-4B3C-9018-EECCC053BFC8}
 		{CAD7F9C1-263C-4F8D-A04E-BE9B36AFA7B0} = {F98BDD83-E5F3-43AA-BF59-7138B18C2294}
+		{8B78DDBA-BBE2-4678-B600-7248A514421A} = {B5C72662-73C4-4B3C-9018-EECCC053BFC8}
+		{F59E563C-E136-4AAD-9EA3-AB03D2890320} = {F98BDD83-E5F3-43AA-BF59-7138B18C2294}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A88C93F7-82C2-4E11-BCCA-47CB8988CCB2}

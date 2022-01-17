@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>f79a55bb-7f14-44ab-adad-6936e73ac281</UserSecretsId>
+		<RootNamespace>Mediscreen</RootNamespace>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Mediscreen.Demographics.WebApi.Client\Mediscreen.Demographics.WebApi.Client.csproj" />
+		<ProjectReference Include="..\Mediscreen.DiabetesAssessment.Data\Mediscreen.DiabetesAssessment.Data.csproj" />
+		<ProjectReference Include="..\Mediscreen.History.WebApi.Client\Mediscreen.History.WebApi.Client.csproj" />
+	</ItemGroup>
+
+</Project>
