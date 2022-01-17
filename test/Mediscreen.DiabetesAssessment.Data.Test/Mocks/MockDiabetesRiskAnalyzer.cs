@@ -1,5 +1,4 @@
 ﻿using Mediscreen.Data;
-using System.Threading.Tasks;
 
 namespace Mediscreen.Mocks
 {
@@ -8,12 +7,12 @@ namespace Mediscreen.Mocks
         public PatientData? AnalyzeRisk_ParamPatient;
         public int? AnalyzeRisk_ParamTriggerTermsCount;
         public DiabetesRiskLevel AnalyzeRisk_Return = DiabetesRiskLevel.None;
-        public Task<DiabetesRiskLevel> AnalyzeRisk(PatientData patient, int triggerTermsCount)
+        public DiabetesRiskLevel AnalyzeRisk(PatientData patient, int triggerTermsCount)
         {
             AnalyzeRisk_ParamPatient = patient;
             AnalyzeRisk_ParamTriggerTermsCount = triggerTermsCount;
 
-            return Task.FromResult(AnalyzeRisk_Return);
+            return AnalyzeRisk_Return;
         }
     }
 }

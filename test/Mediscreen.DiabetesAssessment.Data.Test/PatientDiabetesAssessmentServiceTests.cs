@@ -58,7 +58,7 @@ namespace Mediscreen.Data
             };
             var noteService = NoteService();
             var triggerTermCounter = TriggerTermCounter();
-            var service = Service(patientService, noteService, triggerTermCounter: triggerTermCounter);
+            var service = Service(patientService, noteService, triggerTermCounter);
 
             await service.GenerateDiabetesReport(patientId);
 
@@ -84,8 +84,9 @@ namespace Mediscreen.Data
             var triggerTermCounter = TriggerTermCounter();
             triggerTermCounter.CountTriggerTerms_Return = triggerTerms;
             var diabetesRiskAnalyzer = DiabetesRiskAnalyzer();
-            var service = Service(patientService, noteService, triggerTermCounter: triggerTermCounter,
-                diabetesRiskAnalyzer: diabetesRiskAnalyzer);
+            var clock = Clock();
+            var service = Service(patientService, noteService, triggerTermCounter, diabetesRiskAnalyzer,
+                clock);
 
             await service.GenerateDiabetesReport(patientId);
 
@@ -125,7 +126,7 @@ namespace Mediscreen.Data
 
             Assert.Equal($"Patient: {patient.GetFullName()} (age {expectedAge}) diabetes assessment is: {ToString((DiabetesRiskLevel)expectedDiabetesRiskLevel)}", result);
 
-            string ToString(DiabetesRiskLevel diabetesRiskLevel)
+            static string ToString(DiabetesRiskLevel diabetesRiskLevel)
             {
                 if (diabetesRiskLevel == DiabetesRiskLevel.None)
                     return "None";

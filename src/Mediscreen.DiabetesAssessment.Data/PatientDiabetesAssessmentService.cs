@@ -35,7 +35,7 @@ namespace Mediscreen.Data
 
             var triggerTermsCount = await _triggerTermsCounter.CountTriggerTerms(notes);
 
-            var diabetesRiskLevel = await _diabetesRiskAnalyzer.AnalyzeRisk(patient, triggerTermsCount);
+            var diabetesRiskLevel = _diabetesRiskAnalyzer.AnalyzeRisk(patient, triggerTermsCount);
 
             return WriteDiabetesReport(patient, diabetesRiskLevel);
         }

@@ -2,6 +2,6 @@
 {
     public interface IDiabetesRiskAnalyzer
     {
-        Task<DiabetesRiskLevel> AnalyzeRisk(PatientData patient, int triggerTermsCount);
+        DiabetesRiskLevel AnalyzeRisk(PatientData patient, int triggerTermsCount);
     }
 }
