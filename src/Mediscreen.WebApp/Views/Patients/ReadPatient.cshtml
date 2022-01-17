@@ -47,6 +47,7 @@
             <a class="btn btn-primary" asp-controller="Patients" asp-action="ReadPatients">Back to All Patients</a>
             <a class="btn btn-primary" asp-controller="Patients" asp-action="UpdatePatient" asp-route-id="@Model.Id">Update Patient</a>
             <a class="btn btn-primary" asp-controller="PatientNotes" asp-action="ReadNotes" asp-route-patientId="@Model.Id">Patient Notes</a>
+            <a class="btn btn-primary" asp-controller="PatientDiabetesAssessment" asp-action="ReadReport" asp-route-patientId="@Model.Id">Patient Diabetes Report</a>
         </div>
     </div>
 </section>

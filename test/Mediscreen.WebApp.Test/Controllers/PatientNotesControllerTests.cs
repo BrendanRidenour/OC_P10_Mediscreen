@@ -1,5 +1,5 @@
 ﻿using Mediscreen.Mocks;
-using Mediscreen.Models.PatientNotes;
+using Mediscreen.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -176,6 +176,15 @@ namespace Mediscreen.Controllers
         public void ReadNotes_HasHttpGetAttribute()
         {
             var attribute = GetMethodAttribute<PatientNotesController, HttpGetAttribute>("ReadNotes");
+
+            Assert.NotNull(attribute);
+        }
+
+        [Fact]
+        public void ReadNotes_PatientIdHasFromRouteAttribute()
+        {
+            var attribute = GetParameterAttribute<PatientNotesController, FromRouteAttribute>("ReadNotes",
+                "patientId");
 
             Assert.NotNull(attribute);
         }

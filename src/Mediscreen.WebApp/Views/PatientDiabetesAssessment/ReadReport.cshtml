@@ -1,0 +1,13 @@
+﻿@model PatientViewModel<string>
+@{
+    ViewBag.Title = "Diabetes Assessment";
+}
+
+<section id="patient-notes">
+    <h1>@ViewBag.Title</h1>
+    <h3>@Model!.Value</h3>
+    <div class="mt-4">
+        <a class="btn btn-primary" asp-controller="Patients" asp-action="ReadPatient" asp-route-id="@Model.Patient.Id">Patient Details</a>
+        <a class="btn btn-primary" asp-controller="PatientNotes" asp-action="CreateNote" asp-route-patientId="@Model.Patient.Id">Add a Note</a>
+    </div>
+</section>

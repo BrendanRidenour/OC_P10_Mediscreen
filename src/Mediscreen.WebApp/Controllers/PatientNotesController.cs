@@ -1,5 +1,5 @@
 ﻿using Mediscreen.Data;
-using Mediscreen.Models.PatientNotes;
+using Mediscreen.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

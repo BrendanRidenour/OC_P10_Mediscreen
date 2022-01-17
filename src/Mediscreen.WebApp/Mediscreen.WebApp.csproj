@@ -17,6 +17,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Mediscreen.Core\Mediscreen.Core.csproj" />
 	  <ProjectReference Include="..\Mediscreen.Demographics.WebApi.Client\Mediscreen.Demographics.WebApi.Client.csproj" />
+	  <ProjectReference Include="..\Mediscreen.DiabetesAssessment.WebApi.Client\Mediscreen.DiabetesAssessment.WebApi.Client.csproj" />
 	  <ProjectReference Include="..\Mediscreen.History.WebApi.Client\Mediscreen.History.WebApi.Client.csproj" />
 	</ItemGroup>
 

@@ -61,15 +61,13 @@ namespace Mediscreen.Data
         }
 
         static HttpResponseMessage ResponseMessage(HttpStatusCode code) => new(code);
-        static HttpResponseMessage ResponseMessage<T>(HttpStatusCode code, T content)
+        static HttpResponseMessage ResponseMessage(HttpStatusCode code, string content)
         {
             var response = ResponseMessage(code);
 
             if (content is not null)
             {
-                var json = JsonSerializer.Serialize(content);
-
-                response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                response.Content = new StringContent(content, Encoding.UTF8, "text/plain");
             }
 
             return response;

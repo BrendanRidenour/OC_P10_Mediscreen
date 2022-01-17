@@ -1,4 +1,4 @@
-﻿namespace Mediscreen.Models.PatientNotes
+﻿namespace Mediscreen.Models
 {
     public class PatientViewModel<T>
     {

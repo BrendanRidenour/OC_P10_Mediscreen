@@ -17,7 +17,7 @@ namespace Mediscreen.Data
 
             response.EnsureSuccessStatusCode();
 
-            var report = await response.Content.ReadFromJsonAsync<string>();
+            var report = await response.Content.ReadAsStringAsync();
 
             return report;
         }
