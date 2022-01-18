@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 
 namespace Mediscreen.Data
 {
@@ -36,6 +37,9 @@ namespace Mediscreen.Data
         public async Task<PatientEntity?> Read(Guid id)
         {
             var response = await _http.GetAsync($"/patients/{id}");
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
 
             response.EnsureSuccessStatusCode();
 

@@ -136,6 +136,18 @@ namespace Mediscreen.Data
         }
 
         [Fact]
+        public async Task Read_IdOverload_404SuccessStatusCode_ReturnsNull()
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage(HttpStatusCode.NotFound);
+            var patientService = PatientService(http);
+
+            var result = await patientService.Read(Guid.NewGuid());
+
+            Assert.Null(result);
+        }
+
+        [Fact]
         public async Task Read_IdOverload_WhenCalled_ReturnsEntity()
         {
             var http = HttpClient();
