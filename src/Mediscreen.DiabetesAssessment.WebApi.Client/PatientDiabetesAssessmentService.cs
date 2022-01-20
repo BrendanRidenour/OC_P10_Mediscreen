@@ -21,5 +21,16 @@ namespace Mediscreen.Data
 
             return report;
         }
+
+        public async Task<string?> GenerateDiabetesReport(string patientFamilyName)
+        {
+            var response = await _http.GetAsync($"/diabetesassessment/{patientFamilyName}");
+
+            response.EnsureSuccessStatusCode();
+
+            var report = await response.Content.ReadAsStringAsync();
+
+            return report;
+        }
     }
 }

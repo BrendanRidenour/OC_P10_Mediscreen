@@ -49,13 +49,61 @@ namespace Mediscreen.Data
         [Theory]
         [InlineData("report1")]
         [InlineData("report2")]
-        public async Task Read_PatientIdOverload_WhenCalled_ReturnsEntities(string report)
+        public async Task GenerateDiabetesReport_PatientIdOverload_WhenCalled_ReturnsEntities(string report)
         {
             var http = HttpClient();
             http.SendAsync_Return = ResponseMessage(HttpStatusCode.OK, report);
             var patientService = DiabetesService(http);
 
             var result = await patientService.GenerateDiabetesReport(patientId: Guid.NewGuid());
+
+            Assert.Equal(report, result);
+        }
+        [Theory]
+        [InlineData("famname1", "report1")]
+        [InlineData("famname2", "report2")]
+        public async Task GenerateDiabetesReport_PatientFamilyNameOverload_WhenCalled_CallsGetOnHttp(
+            string familyName, string report)
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage(HttpStatusCode.OK, report);
+            var patientService = DiabetesService(http);
+
+            await patientService.GenerateDiabetesReport(patientFamilyName: familyName);
+
+            Assert.Equal(HttpMethod.Get, http.SendAsync_ParamRequest.Method);
+            Assert.Equal(new Uri($"https://example.com/diabetesassessment/{familyName}"),
+                http.SendAsync_ParamRequest.RequestUri);
+        }
+
+        [Theory]
+        [InlineData(300)]
+        [InlineData(400)]
+        [InlineData(500)]
+        public async Task GenerateDiabetesReport_PatientFamilyNameOverload_NotSuccessStatusCode_Throws(int code)
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage((HttpStatusCode)code);
+            var patientService = DiabetesService(http);
+
+            var exception = await Assert.ThrowsAsync<HttpRequestException>(async () =>
+            {
+                await patientService.GenerateDiabetesReport(patientFamilyName: "famname");
+            });
+
+            Assert.Equal((HttpStatusCode)code, exception.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("report1")]
+        [InlineData("report2")]
+        public async Task GenerateDiabetesReport_PatientFamilyNameOverload_WhenCalled_ReturnsEntities(string report)
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage(HttpStatusCode.OK, report);
+            var patientService = DiabetesService(http);
+
+            var result = await patientService.GenerateDiabetesReport(patientFamilyName: "famname");
 
             Assert.Equal(report, result);
         }

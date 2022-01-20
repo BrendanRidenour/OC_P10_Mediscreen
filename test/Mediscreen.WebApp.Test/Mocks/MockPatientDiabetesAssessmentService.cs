@@ -10,7 +10,15 @@ namespace Mediscreen.Mocks
         public string? GenerateDiabetesReport_Return = "report";
         public Task<string?> GenerateDiabetesReport(Guid patientId)
         {
-            this.GenerateDiabetesReport_ParamPatientId = patientId;
+            GenerateDiabetesReport_ParamPatientId = patientId;
+
+            return Task.FromResult(GenerateDiabetesReport_Return);
+        }
+
+        public string? GenerateDiabetesReport_ParamPatientFamilyName;
+        public Task<string?> GenerateDiabetesReport(string patientFamilyName)
+        {
+            GenerateDiabetesReport_ParamPatientFamilyName = patientFamilyName;
 
             return Task.FromResult(GenerateDiabetesReport_Return);
         }

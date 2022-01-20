@@ -28,6 +28,9 @@ namespace Mediscreen.Data
         public Task<PatientEntity?> Read(Guid id) =>
             _db.Patients.SingleOrDefaultAsync(e => e.Id == id);
 
+        public Task<PatientEntity?> Read(string familyName) =>
+            _db.Patients.SingleOrDefaultAsync(e => e.FamilyName == familyName);
+
         public async Task Update(PatientEntity entity)
         {
             _db.Patients.Update(entity);

@@ -31,6 +31,15 @@ namespace Mediscreen.Mocks
             return Task.FromResult(ReadById_Return);
         }
 
+        public string? ReadByFamilyName_ParamFamilyName;
+        public PatientEntity? ReadByFamilyName_Return;
+        public Task<PatientEntity?> Read(string familyName)
+        {
+            ReadByFamilyName_ParamFamilyName = familyName;
+
+            return Task.FromResult(ReadByFamilyName_Return);
+        }
+
         public PatientEntity? Update_ParamEntity;
         public Task Update(PatientEntity entity)
         {

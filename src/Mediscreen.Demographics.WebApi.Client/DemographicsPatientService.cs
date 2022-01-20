@@ -48,6 +48,20 @@ namespace Mediscreen.Data
             return entity;
         }
 
+        public async Task<PatientEntity?> Read(string familyName)
+        {
+            var response = await _http.GetAsync($"/patients/{familyName}");
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            response.EnsureSuccessStatusCode();
+
+            var entity = await response.Content.ReadFromJsonAsync<PatientEntity>();
+
+            return entity;
+        }
+
         public async Task Update(PatientEntity patient)
         {
             var response = await _http.PutAsJsonAsync($"/patients/{patient.Id}", (PatientData)patient);

@@ -163,6 +163,68 @@ namespace Mediscreen.Data
         }
 
         [Theory]
+        [InlineData("famname1")]
+        [InlineData("famname2")]
+        public async Task Read_FamilyNameOverload_WhenCalled_CallsGetOnHttp(string familyName)
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage(HttpStatusCode.OK, PatientEntity());
+            var patientService = PatientService(http);
+
+            await patientService.Read(familyName);
+
+            Assert.Equal(HttpMethod.Get, http.SendAsync_ParamRequest.Method);
+            Assert.Equal(new Uri($"https://example.com/patients/{familyName}"),
+                http.SendAsync_ParamRequest.RequestUri);
+        }
+
+        [Theory]
+        [InlineData(300)]
+        [InlineData(400)]
+        [InlineData(500)]
+        public async Task Read_FamilyNameOverload_NotSuccessStatusCode_Throws(int code)
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage((HttpStatusCode)code);
+            var patientService = PatientService(http);
+
+            var exception = await Assert.ThrowsAsync<HttpRequestException>(async () =>
+            {
+                await patientService.Read(familyName: "famname");
+            });
+
+            Assert.Equal((HttpStatusCode)code, exception.StatusCode);
+        }
+
+        [Fact]
+        public async Task Read_FamilyNameOverload_404SuccessStatusCode_ReturnsNull()
+        {
+            var http = HttpClient();
+            http.SendAsync_Return = ResponseMessage(HttpStatusCode.NotFound);
+            var patientService = PatientService(http);
+
+            var result = await patientService.Read(familyName: "famname");
+
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("famname1")]
+        [InlineData("famname2")]
+        public async Task Read_FamilyNameOverload_WhenCalled_ReturnsEntity(string familyName)
+        {
+            var http = HttpClient();
+            var entity = PatientEntity();
+            entity.FamilyName = familyName;
+            http.SendAsync_Return = ResponseMessage(HttpStatusCode.OK, entity);
+            var patientService = PatientService(http);
+
+            var result = await patientService.Read(familyName);
+
+            Assert.Equal(familyName, result!.FamilyName);
+        }
+
+        [Theory]
         [InlineData("GN1")]
         [InlineData("GN2")]
         public async Task Update_PatientOverload_WhenCalled_CallsPutOnHttp(string givenName)

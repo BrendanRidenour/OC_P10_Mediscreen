@@ -28,6 +28,21 @@ namespace Mediscreen.Data
             if (patient is null)
                 return null;
 
+            return await GenerateDiabetesReport(patient);
+        }
+
+        public async Task<string?> GenerateDiabetesReport(string patientFamilyName)
+        {
+            var patient = await _patientService.Read(patientFamilyName);
+
+            if (patient is null)
+                return null;
+
+            return await GenerateDiabetesReport(patient);
+        }
+
+        protected async Task<string?> GenerateDiabetesReport(PatientEntity patient)
+        {
             var notes = await _noteService.Read(patient.Id);
 
             if (notes is null || !notes.Any())

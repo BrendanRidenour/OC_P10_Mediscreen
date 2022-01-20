@@ -26,10 +26,22 @@ namespace Mediscreen.Controllers
         public Task<IEnumerable<PatientEntity>> Read() => _patientService.Read();
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public async Task<ActionResult<PatientEntity>> Read([FromRoute] Guid id)
         {
             var entity = await _patientService.Read(id);
+
+            if (entity == null)
+                return NotFound();
+
+            return entity;
+        }
+
+        [HttpGet]
+        [Route("{familyName}")]
+        public async Task<ActionResult<PatientEntity>> Read([FromRoute] string familyName)
+        {
+            var entity = await _patientService.Read(familyName);
 
             if (entity == null)
                 return NotFound();

@@ -37,7 +37,7 @@ namespace Mediscreen.Controllers
             var attribute = GetMethodAttribute<DiabetesAssessmentController, HttpGetAttribute>(
                 "GenerateDiabetesReport");
 
-            Assert.Equal("{patientId}", attribute.Template);
+            Assert.Equal("{patientId:guid}", attribute.Template);
         }
 
         [Fact]
@@ -86,6 +86,69 @@ namespace Mediscreen.Controllers
             var patientId = Guid.NewGuid();
 
             var actionResult = await controller.GenerateDiabetesReport(patientId);
+
+            var result = Assert.IsType<string>(actionResult.Value);
+            Assert.Equal(report, result);
+        }
+
+        [Fact]
+        public void GenerateDiabetesReport_PatientFamilyNameOverload_HasHttpGetAttribute()
+        {
+            var attribute = GetMethodAttribute<DiabetesAssessmentController, HttpGetAttribute>(
+                "GenerateDiabetesReport", methodIndex: 1);
+
+            Assert.Equal("{patientFamilyName}", attribute.Template);
+        }
+
+        [Fact]
+        public void GenerateDiabetesReport_PatientFamilyNameOverload_PatientFamilyNameHasFromRouteAttribute()
+        {
+            var attribute = GetParameterAttribute<DiabetesAssessmentController, FromRouteAttribute>(
+                "GenerateDiabetesReport", "patientFamilyName", methodIndex: 1);
+
+            Assert.NotNull(attribute);
+        }
+
+        [Theory]
+        [InlineData("famname1")]
+        [InlineData("famname2")]
+        public async Task GenerateDiabetesReport_PatientFamilyNameOverload_WhenCalled_CallsGenerateDiabetesReportOnAssessmentService(
+            string familyName)
+        {
+            var service = AssessmentService();
+            var controller = Controller(service);
+
+            await controller.GenerateDiabetesReport(familyName);
+
+            Assert.Equal(service.GenerateDiabetesReport_ParamPatientFamilyName, familyName);
+        }
+
+        [Theory]
+        [InlineData("famname1")]
+        [InlineData("famname2")]
+        public async Task GenerateDiabetesReport_PatientFamilyNameOverload_AssessmentServiceGenerateDiabetesReportReturnsNull_ReturnsNotFound(
+            string familyName)
+        {
+            var service = AssessmentService();
+            service.GenerateDiabetesReport_Return = null;
+            var controller = Controller(service);
+
+            var actionResult = await controller.GenerateDiabetesReport(familyName);
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+        }
+
+        [Theory]
+        [InlineData("report1")]
+        [InlineData("report2")]
+        public async Task GenerateDiabetesReport_PatientFamilyNameOverload_WhenCalled_ReturnsAssessmentServiceReport(
+            string report)
+        {
+            var service = AssessmentService();
+            service.GenerateDiabetesReport_Return = report;
+            var controller = Controller(service);
+
+            var actionResult = await controller.GenerateDiabetesReport(patientFamilyName: "famname");
 
             var result = Assert.IsType<string>(actionResult.Value);
             Assert.Equal(report, result);

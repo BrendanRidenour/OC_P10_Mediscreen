@@ -109,7 +109,7 @@ namespace Mediscreen.Controllers
             var attribute = GetMethodAttribute<PatientsController, RouteAttribute>("Read",
                 methodIndex: 1);
 
-            Assert.Equal("{id}", attribute.Template);
+            Assert.Equal("{id:guid}", attribute.Template);
         }
 
         [Fact]
@@ -158,6 +158,71 @@ namespace Mediscreen.Controllers
             var readResult = await controller.Read(id);
 
             Assert.Equal(patientService.ReadById_Return, readResult.Value);
+        }
+
+        [Fact]
+        public void Read_FamilyNameOverload_HasHttpGetAttribute()
+        {
+            var attribute = GetMethodAttribute<PatientsController, HttpGetAttribute>("Read",
+                methodIndex: 2);
+
+            Assert.NotNull(attribute);
+        }
+
+        [Fact]
+        public void Read_FamilyNameOverload_HasRouteAttribute()
+        {
+            var attribute = GetMethodAttribute<PatientsController, RouteAttribute>("Read",
+                methodIndex: 2);
+
+            Assert.Equal("{familyName}", attribute.Template);
+        }
+
+        [Fact]
+        public void Read_FamilyNameOverload_FamilyNameHasFromRouteAttribute()
+        {
+            var attribute = GetParameterAttribute<PatientsController, FromRouteAttribute>("Read",
+                "familyName", methodIndex: 2);
+
+            Assert.NotNull(attribute);
+        }
+
+        [Theory]
+        [InlineData("famname1")]
+        [InlineData("famname2")]
+        public async Task Read_FamilyNameOverload_WhenCalled_CallsReadOnPatientService(string familyName)
+        {
+            var patientService = PatientService();
+            patientService.ReadById_Return = null;
+            var controller = Controller(patientService);
+
+            await controller.Read(familyName);
+
+            Assert.Equal(familyName, patientService.ReadByFamilyName_ParamFamilyName);
+        }
+
+        [Fact]
+        public async Task Read_FamilyNameOverload_PatientServiceReturnsNull_ReturnsNotFound()
+        {
+            var patientService = PatientService();
+            patientService.ReadById_Return = null;
+            var controller = Controller(patientService);
+
+            var readResult = await controller.Read(familyName: "famname");
+
+            Assert.IsType<NotFoundResult>(readResult.Result);
+        }
+
+        [Fact]
+        public async Task Read_FamilyNameOverload_WhenCalled_ReturnsEntity()
+        {
+            var patientService = PatientService();
+            patientService.ReadByFamilyName_Return = PatientEntity();
+            var controller = Controller(patientService);
+
+            var readResult = await controller.Read(familyName: "famname");
+
+            Assert.Equal(patientService.ReadByFamilyName_Return, readResult.Value);
         }
 
         [Fact]

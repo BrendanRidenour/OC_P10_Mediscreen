@@ -103,6 +103,38 @@ namespace Mediscreen.Data
             Assert.Equal(entity, result);
         }
 
+        [Fact]
+        public async Task ReadByFamilyName_FamilyNameDoesNotExist_ReturnsNull()
+        {
+            var db = Db();
+            var service = new EntityFrameworkPatientService(db);
+
+            var result = await service.Read(familyName: "fname");
+
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("famname1")]
+        [InlineData("famname2")]
+        public async Task ReadByFamilyName_FamilyNameDoesExist_ReturnsEntity(string familyName)
+        {
+            // Arrange
+            var entity = Entity(familyName);
+
+            var db = Db();
+            db.Patients.Add(entity);
+            await db.SaveChangesAsync();
+
+            var service = new EntityFrameworkPatientService(db);
+
+            // Act
+            var result = await service.Read(familyName);
+
+            // Assert
+            Assert.Equal(entity, result);
+        }
+
         [Theory]
         [InlineData("G1")]
         [InlineData("G2")]
@@ -140,6 +172,13 @@ namespace Mediscreen.Data
             Id = id,
             GivenName = "GN",
             FamilyName = "FN",
+            DateOfBirth = new Date(1990, 1, 1),
+        };
+        static PatientEntity Entity(string familyName) => new()
+        {
+            Id = Guid.NewGuid(),
+            GivenName = "GN",
+            FamilyName = familyName,
             DateOfBirth = new Date(1990, 1, 1),
         };
     }
