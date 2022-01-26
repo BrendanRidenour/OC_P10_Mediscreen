@@ -7,7 +7,7 @@ builder.Services.AddTransient<IPatientService, EntityFrameworkPatientService>();
 
 builder.Services.AddDbContext<PatientDbContext>(db =>
 {
-    db.UseSqlServer(builder.Configuration["Data:SqlServer:ConnectionString"]);
+    db.UseSqlServer(builder.Configuration["SqlServerConnectionString"]);
 });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);

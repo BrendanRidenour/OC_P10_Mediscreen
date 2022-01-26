@@ -1,6 +1,5 @@
 ﻿using Mediscreen.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace Mediscreen.Controllers
 {
